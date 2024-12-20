@@ -1,0 +1,65 @@
+
+********************* PROCESS for R Version 4.3.1 ********************* 
+ 
+           Written by Andrew F. Hayes, Ph.D.  www.afhayes.com              
+   Documentation available in Hayes (2022). www.guilford.com/p/hayes3   
+ 
+*********************************************************************** 
+                    
+Model : 1           
+    Y : PC1_CT      
+    X : GA          
+    W : SES_at_birth
+
+Sample size: 96
+
+Custom seed: 1234
+
+
+*********************************************************************** 
+Outcome Variable: PC1_CT
+
+Model Summary: 
+          R      R-sq       MSE         F       df1       df2         p
+     0.4151    0.1723    0.9154    6.3839    3.0000   92.0000    0.0006
+
+Model: 
+                 coeff        se         t         p      LLCI      ULCI
+constant        2.4834    3.8336    0.6478    0.5187   -5.1304   10.0973
+GA             -0.0648    0.1250   -0.5185    0.6054   -0.3130    0.1834
+SES_at_birth   -3.5175    1.7490   -2.0112    0.0472   -6.9911   -0.0438
+Int_1           0.1037    0.0568    1.8273    0.0709   -0.0090    0.2165
+
+Product terms key:
+Int_1  :  GA  x  SES_at_birth      
+
+Test(s) of highest order unconditional interaction(s):
+      R2-chng         F       df1       df2         p
+X*W    0.0300    3.3391    1.0000   92.0000    0.0709
+----------
+Focal predictor: GA (X)
+      Moderator: SES_at_birth (W)
+
+Conditional effects of the focal predictor at values of the moderator(s):
+  SES_at_birth    effect        se         t         p      LLCI      ULCI
+        1.0000    0.0389    0.0751    0.5185    0.6054   -0.1102    0.1880
+        2.0000    0.1426    0.0457    3.1203    0.0024    0.0518    0.2334
+        3.0000    0.2464    0.0706    3.4879    0.0007    0.1061    0.3866
+
+Data for visualizing the conditional effect of the focal predictor:
+         GA SES_at_birth    PC1_CT
+    29.0000       1.0000    0.0946
+    30.0000       1.0000    0.1335
+    32.4800       1.0000    0.2300
+    29.0000       2.0000   -0.4149
+    30.0000       2.0000   -0.2723
+    32.4800       2.0000    0.0814
+    29.0000       3.0000   -0.9245
+    30.0000       3.0000   -0.6781
+    32.4800       3.0000   -0.0671
+
+******************** ANALYSIS NOTES AND ERRORS ************************ 
+
+Level of confidence for all confidence intervals in output: 95
+
+W values in conditional tables are the 16th, 50th, and 84th percentiles.

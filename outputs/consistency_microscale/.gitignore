@@ -1,0 +1,4 @@
+# Ignore everything in this folder
+BEST*
+# Except this file
+!.gitignore
