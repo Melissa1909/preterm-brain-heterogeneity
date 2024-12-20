@@ -1,0 +1,19 @@
+# General 
+.DS_Store
+
+# Distribution / packaging
+build/
+
+# Python
+.venv
+.ipynb_checkpoints
+__pycache__/*
+
+# R
+.Rhistory
+.Rproj.user
+
+
+# not shared due to data restrictions
+code/BrainCharts/*
+code/processv43/*
