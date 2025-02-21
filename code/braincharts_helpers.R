@@ -37,7 +37,8 @@ fit_braincharts_model <- function(roi, dat, sw_dir, out_dir, plotting, ncores = 
   # } else {
   #   mdl_dir <- file.path(sw_dir, "model_new")
   # }
-  mdl_dir <- file.path(sw_dir, "BrainCharts_refit_28022024")
+  #mdl_dir <- file.path(sw_dir, "BrainCharts_refit_28022024")
+  mdl_dir <- file.path(sw_dir, "Share", "RefittedModels")
   print(mdl_dir)
   tryCatch({
     FitObj <- readRDS( file=file.path(mdl_dir, paste("FIT_", roi, ".rds" , sep="")))
@@ -137,7 +138,8 @@ plot_pop_curve_plotting <- function(dat, term_data_best, preterm_data_best, r, r
 plot_pop_curves <- function(roi, sw_dir, out_dir, best_analysis_dir) {
   print(paste("PLOTTING", roi, "........."))
   
-  mdl_dir <- file.path(sw_dir, "BrainCharts_refit_28022024")
+  # mdl_dir <- file.path(sw_dir, "BrainCharts_refit_28022024")
+  mdl_dir <- file.path(sw_dir, "Share", "RefittedModels")
   
   FIT <- readRDS(file = file.path(mdl_dir, paste0("FIT_", roi, ".rds")))
   RESULT.BEST <- readRDS(file.path(best_analysis_dir, paste0("result_gamlss_", roi, ".rds")))

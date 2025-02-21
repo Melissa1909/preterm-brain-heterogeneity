@@ -18,3 +18,4 @@ __pycache__/*
 # not shared due to data restrictions
 code/BrainCharts/*
 code/processv43/*
+create_minimal_working_example_data.ipynb

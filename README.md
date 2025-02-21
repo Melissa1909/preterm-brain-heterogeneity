@@ -20,7 +20,7 @@ Please cite the publication when using the data or code provided in this reposit
 
 
 ## Installation
-This repository contains the code to reproduce the analyses and figures of the publication. The code is written mainly in Python and R, only Fig. 5 is generated in MATLAB. The installation steps are described below. Analyses were carried out on a MacBook Air with macOS Sonoma 14.6.1 and might require adjustments for other operating systems, especially Windows. The code was additionally tested on a HP Pro notebook with Windows 11 Pro. The installation command differ slightly for Windows, please individually adjust the commands accordingly.
+This repository contains the code to reproduce the analyses and figures of the publication. The code is written mainly in Python and R, only Fig. 5 is generated using MATLAB. The installation steps are described below. Analyses were carried out on a MacBook Air with macOS Sonoma 14.6.1 and might require adjustments for other operating systems, especially Windows. The code was additionally tested on a HP Pro notebook with Windows 11 Pro. The installation command differ slightly for Windows, please individually adjust the commands accordingly.
 
 ### Software requirements
 - [Python 3.11.9](https://www.python.org/downloads/release/python-3119/)
@@ -36,11 +36,10 @@ This repository contains the code to reproduce the analyses and figures of the p
     ```bash
     git clone https://github.com/Melissa1909/preterm-brain-heterogeneity 
     ```
-3. Clone the BrainChart repository, copy it into `/code`, and remove unnecessary models of original publications:
+3. Clone the BrainChart repository (contains the pretrained normative models and code to refit them) into `/code`:
     ```bash
     cd preterm-brain-heterogeneity/code
     git clone https://github.com/brainchart/Lifespan BrainCharts
-    rm -rf BrainCharts/Share
     cd ..
     ```
 4. Create a virtual environment with Python 3.11.9:
