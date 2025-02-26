@@ -32,42 +32,30 @@ This repository contains the code to reproduce the analyses and figures of the p
     ```bash
     mkdir /path/to/your/setup && cd /path/to/your/setup
     ```
-2. Clone this repository:
+2. Clone this repository (including submodules `Lifespan` containing the pretrained normative models and code to refit them) into the directory:
     ```bash
-    git clone https://github.com/Melissa1909/preterm-brain-heterogeneity 
+    git clone --recursive https://github.com/Melissa1909/preterm-brain-heterogeneity 
     ```
-3. Clone the BrainChart repository (contains the pretrained normative models and code to refit them) into `/code`:
-    ```bash
-    cd preterm-brain-heterogeneity/code
-    git clone https://github.com/brainchart/Lifespan BrainCharts
-    cd ..
-    ```
-4. Create a virtual environment with Python 3.11.9:
+3. Create a virtual environment with Python 3.11.9 and activate it:
     ```bash 
     python3.11 -m venv .venv 
+    source .venv/bin/activate
     ```
-5. Activate the virtual environment:
-    
-    On Windows:
+    On Windows, activation is done with:
         ```bash
         .venv\Scripts\activate
         ```
-    
-    On macOS/Linux:
-        ```bash
-        source .venv/bin/activate
-        ```
-7. Install python dependencies:
+4. Install python dependencies:
     ```bash
     pip install -r requirements.txt
     ```
-6. Install the required R packages (run this in an R environment):
+5. Install the required R packages (run this in an R environment):
     ```R
     install.packages(c("ggplot2", "gamlss", "tidyverse", "devtools", "invgamma"))
     devtools::install_github("jcbeer/longCombat")
     ```
     Furthermore, install the PROCESS toolbox for R. You can download it [here](https://www.afhayes.com/public/processv43.zip), unzip it, and place it into `/code` as well.
-7. Install the required MATLAB package (for Fig. 5 only):
+6. Install the required MATLAB package (for Fig. 5 only):
     ```bash
     cd preterm-brain-heterogeneity/code
     git clone https://github.com/dutchconnectomelab/Simple-Brain-Plot 
@@ -75,12 +63,17 @@ This repository contains the code to reproduce the analyses and figures of the p
 
 
 ## Usage
+### `Lifespan` submodule
+The submodule `Lifespan` contains the [pretrained normative models](https://doi.org/10.1038/s41586-022-04554-y) and code to refit them. Credit goes to @rb643 and @jms290 for providing the code and models. The submodule is included in the repository to ensure reproducibility of the results. Furthermore, a minimal adaptation of the code was necessary to fit the models to the data of the publication (i.e., the only adaptation was to not remove all variables before refitting the models, so that the functions can be run with passing variables). 
+
 ### `/data`
 The subfolders would contain the data used in the publication but are empty due to data protection regulations. 
 - `dHCP`: Neonatal imaging data from the developmental Human Connectome Project. The dataset requires access application [here](https://nda.nih.gov/edit_collection.html?id=3955). Furthermore, data need to be parcellated with the [M-CRIB-S parcellation](https://github.com/DevelopmentalImagingMCRI/MCRIBS), which corresponds to the adult Desikan-Killiany atlas.
 - `ABCD`: Children imaging data from the Adolescence Brain Cognitive Development Study. Apply to access [here](https://nda.nih.gov/abcd/requestaccess) and download the data from [release 4.0](https://nda.nih.gov/study.html?id=1299). 
 - `BLS`: Adult imaging, behavioral, and perinatal data collected in-house. Access can be granted only upon reasonable request from the authors. 
 - `cell_types`: Copy of compiled cell-specific gene set list from all available large-scale single-cell studies of the adult human cortex obtained from the raw [Seidlitz et al.](https://doi.org/10.1038/s41467-020-17051-5) [dataset](https://staticcontent.springer.com/esm/art%3A10.1038%2Fs41467-020-17051-5/MediaObjects/41467_2020_17051_MOESM8_ESM.xlsx).
+
+To provide a minimal working example, a synthetic version of each original dataset is provided in `synthetic_{dataset}`. The synthetic datasets are generated with the same structure as the original datasets but contain random values. Hence, the analyses can be run without the original data but this will **not** reproduce the results of the publication.
 
 ### `Jupyter notebooks`
 The Jupyter notebooks contain all the analyses code in sequential order to reproduce the results of the publication. The notebooks are organized as follows:
@@ -99,6 +92,9 @@ Contains additional functions for analyses, which are imported in the Jupyter no
 
 ### `/outputs`
 Contains the results of the analyses, including figures.
+
+### `/outputs_synthetic`
+Contains the results of the analyses using synthetic data, including figures. These outputs are just an example based on artificial data and do not correspond to the results of the publication. They were solely generated to provide a minimal working example.
 
 
 ## Troubleshooting
