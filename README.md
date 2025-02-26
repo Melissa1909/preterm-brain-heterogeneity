@@ -93,9 +93,6 @@ Contains additional functions for analyses, which are imported in the Jupyter no
 ### `/outputs`
 Contains the results of the analyses, including figures.
 
-### `/outputs_synthetic`
-Contains the results of the analyses using synthetic data, including figures. These outputs are just an example based on artificial data and do not correspond to the results of the publication. They were solely generated to provide a minimal working example.
-
 
 ## Minimal working example
 Due to data sharing restrictions, we cannot provide the original data used in the publication. However, we provide a synthetic dataset in `data/synthetic_BLS-26` to demonstrate the heterogeneity analysis of preterm adults for CT and SA. The synthetic dataset contains the same variables as the original `BLS-26` dataset, but the data were artificially created by random sampling from a Gaussian distribution with the same mean and standard deviation as the original data. The synthetic data were not used in the publication and do not correspond to the results of the publication.
