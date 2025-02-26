@@ -97,7 +97,7 @@ Contains the results of the analyses, including figures.
 ## Minimal working example
 Due to data sharing restrictions, we cannot provide the original data used in the publication. However, we provide a synthetic dataset in `data/synthetic_BLS-26` to demonstrate the heterogeneity analysis of preterm adults for CT and SA. The synthetic dataset contains the same variables as the original `BLS-26` dataset, but the data were artificially created by random sampling from a Gaussian distribution with the same mean and standard deviation as the original data. The synthetic data were not used in the publication and do not correspond to the results of the publication.
 
-To run the analysis on the synthetic data, run `1_spatialHeterogeneity.ipynb` with `dataset` set to `synthetic_BLS-26`. The results will be saved in the `outputs/spatial_heterogeneity/synthetic_BLS-26` folder. The synthetic data are only used for demonstration purposes and do not correspond to the results of the publication.
+To run the analysis on the synthetic data, run `1_spatialHeterogeneity.ipynb` with `dataset` set to `synthetic_BLS-26`. The results will be saved in the `outputs/spatial_heterogeneity/synthetic_BLS-26` folder. The synthetic data is only used for demonstration purposes and do not correspond to the results of the publication.
 For the other analyses, the original data is required.
 
 
