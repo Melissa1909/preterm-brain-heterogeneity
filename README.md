@@ -20,12 +20,12 @@ Please cite the publication when using the data or code provided in this reposit
 
 
 ## Installation
-This repository contains the code to reproduce the analyses and figures of the publication. The code is written mainly in Python and R, only Fig. 5 is generated using MATLAB. The installation steps are described below. Analyses were carried out on a MacBook Air with macOS Sonoma 14.6.1 and might require adjustments for other operating systems, especially Windows. The code was additionally tested on a HP Pro notebook with Windows 11 Pro. The installation command differ slightly for Windows, please individually adjust the commands accordingly.
+This repository contains the code to reproduce the analyses and figures of the publication. The code is written mainly in Python and R, only Fig. 6 is generated using MATLAB. The installation steps are described below. Analyses were carried out on a MacBook Air with macOS Sonoma 14.6.1 and might require adjustments for other operating systems, especially Windows. The code was additionally tested on a HP Pro notebook with Windows 11 Pro. The installation command differ slightly for Windows, please individually adjust the commands accordingly.
 
 ### Software requirements
 - [Python 3.11.9](https://www.python.org/downloads/release/python-3119/)
 - [R 4.4.1](https://cran.r-project.org/)
-- [MATLAB 2023b](https://de.mathworks.com/help/install/ug/install-products-with-internet-connection.html) (for Fig. 5 only)
+- [MATLAB 2023b](https://de.mathworks.com/help/install/ug/install-products-with-internet-connection.html) (for Fig. 6 only)
 
 ### Installation steps
 1. Create an empty directory and navigate into it:
@@ -55,7 +55,7 @@ This repository contains the code to reproduce the analyses and figures of the p
     devtools::install_github("jcbeer/longCombat")
     ```
     Furthermore, install the PROCESS toolbox for R. You can download it [here](https://www.afhayes.com/public/processv43.zip), unzip it, and place it into `/code` as well.
-6. Install the required MATLAB package (for Fig. 5 only):
+6. Install the required MATLAB package (for Fig. 6 only):
     ```bash
     cd preterm-brain-heterogeneity/code
     git clone https://github.com/dutchconnectomelab/Simple-Brain-Plot 
@@ -64,7 +64,7 @@ This repository contains the code to reproduce the analyses and figures of the p
 
 ## Usage
 ### `Lifespan` submodule
-The submodule `Lifespan` contains the [pretrained normative models](https://doi.org/10.1038/s41586-022-04554-y) and code to refit them. Credit goes to @rb643 and @jms290 for providing the code and models. The submodule is included in the repository to ensure reproducibility of the results. Furthermore, a minimal adaptation of the code was necessary to fit the models to the data of the publication (i.e., the only adaptation was to not remove all variables before refitting the models, so that the functions can be run with passing variables). 
+The submodule `Lifespan` contains the [pretrained normative models](https://doi.org/10.1038/s41586-022-04554-y) and code to refit them. Credit goes to R. Bethlehem (@rb643) and J. Seidlitz (@jms290) for providing the code and models. The submodule is included in the repository to ensure reproducibility of the results. Furthermore, a minimal adaptation of the code was necessary to fit the models to the data of the publication (i.e., the only adaptation was to not remove all variables before refitting the models, so that the functions can be run with passing variables). 
 
 ### `/data`
 The subfolders would contain the data used in the publication but are empty due to data protection regulations. 
@@ -72,8 +72,8 @@ The subfolders would contain the data used in the publication but are empty due 
 - `ABCD`: Children imaging data from the Adolescence Brain Cognitive Development Study. Apply to access [here](https://nda.nih.gov/abcd/requestaccess) and download the data from [release 4.0](https://nda.nih.gov/study.html?id=1299). 
 - `BLS`: Adult imaging, behavioral, and perinatal data collected in-house. Access can be granted only upon reasonable request from the authors. 
 - `cell_types`: Copy of compiled cell-specific gene set list from all available large-scale single-cell studies of the adult human cortex obtained from the raw [Seidlitz et al.](https://doi.org/10.1038/s41467-020-17051-5) [dataset](https://staticcontent.springer.com/esm/art%3A10.1038%2Fs41467-020-17051-5/MediaObjects/41467_2020_17051_MOESM8_ESM.xlsx).
+- `synthetic_BLS-26`: Synthetic dataset for demonstration purposes (see below).
 
-To provide a minimal working example, a synthetic version of each original dataset is provided in `synthetic_{dataset}`. The synthetic datasets are generated with the same structure as the original datasets but contain random values. Hence, the analyses can be run without the original data but this will **not** reproduce the results of the publication.
 
 ### `Jupyter notebooks`
 The Jupyter notebooks contain all the analyses code in sequential order to reproduce the results of the publication. The notebooks are organized as follows:
@@ -85,7 +85,7 @@ The Jupyter notebooks contain all the analyses code in sequential order to repro
 6. `Supp_Rutherford.ipynb`: Reproducing the spatial heterogeneity results in the BLS dataset using a different pre-trained normative model by [Rutherford et al. (2022)](https://doi.org/10.7554/eLife.72904).
 
 ### `MATLAB script`
-Parts of Figure 5 were generated with `Fig5_concept.m` in MATLAB 2023b using Simple-Brain-Plot. 
+Parts of Figure 6 were generated with `Fig6_concept.m` in MATLAB 2023b using Simple-Brain-Plot. 
 
 ### `/code`
 Contains additional functions for analyses, which are imported in the Jupyter notebooks.
@@ -95,6 +95,13 @@ Contains the results of the analyses, including figures.
 
 ### `/outputs_synthetic`
 Contains the results of the analyses using synthetic data, including figures. These outputs are just an example based on artificial data and do not correspond to the results of the publication. They were solely generated to provide a minimal working example.
+
+
+## Minimal working example
+Due to data sharing restrictions, we cannot provide the original data used in the publication. However, we provide a synthetic dataset in `data/synthetic_BLS-26` to demonstrate the heterogeneity analysis of preterm adults for CT and SA. The synthetic dataset contains the same variables as the original `BLS-26` dataset, but the data were artificially created by random sampling from a Gaussian distribution with the same mean and standard deviation as the original data. The synthetic data were not used in the publication and do not correspond to the results of the publication.
+
+To run the analysis on the synthetic data, run `1_spatialHeterogeneity.ipynb` with `dataset` set to `synthetic_BLS-26`. The results will be saved in the `outputs/spatial_heterogeneity/synthetic_BLS-26` folder. The synthetic data are only used for demonstration purposes and do not correspond to the results of the publication.
+For the other analyses, the original data is required.
 
 
 ## Troubleshooting
