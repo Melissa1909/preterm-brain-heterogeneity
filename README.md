@@ -28,6 +28,7 @@ This repository contains the code to reproduce the analyses and figures of the p
 - [MATLAB 2023b](https://de.mathworks.com/help/install/ug/install-products-with-internet-connection.html) (for Fig. 6 only)
 
 ### Installation steps
+*Expected time: 10 minutes*
 1. Create an empty directory and navigate into it:
     ```bash
     mkdir /path/to/your/setup && cd /path/to/your/setup
@@ -77,15 +78,15 @@ The subfolders would contain the data used in the publication but are empty due 
 
 ### `Jupyter notebooks`
 The Jupyter notebooks contain all the analyses code in sequential order to reproduce the results of the publication. The notebooks are organized as follows:
-1. `0.1_dataPrep_*.ipynb`: Preparation of meta- and imaging data for the respective dataset, including quality control, averaging across hemispheres, data harmonization (if applicable), preparation of the input file for subsequent normative modeling.
-2. `1_spatialHeterogeneity.ipynb`: Contrasting average dysmaturation outcomes (based on group comparisons with two-sample t-tests) and individual brain abnormality patterns (IBAPs) obtained via normative modeling. We show that brain aberrations after preterm birth are spatially heterogeneous between individuals in all three datasets. This script should be run for all datasets and the modalities cortical thickness `CT` and surface area `SA`. 
-3. `2_macrosaleConsistency.ipynb`: Investigating the temporal consistency of individual brain abnormality patterns (IBAPs) across the life course. We demonstrate that the extent and location of brain abnormalities are consistent in individual development.
-4. `3_microscaleConsistency.ipynb`: Investigating the cellular underpinnings of IBAPs and their consistency across the life course. The analysis shows that glial cells underpin adult IBAPs, which is complementary to postmortem findings of glial damage in preterm neonates.
-5. `4_developmentalPlasticity_IQ.ipynb`: Assessing the plasticity of IBAPs in response to the early social environment and effects of adult IBAPs on cognitive outcome variability. We show that the early social environment influences the severity of brain abnormalities in preterm individuals and that the severity of IBAPs is linked to IQ in adulthood.
-6. `Supp_Rutherford.ipynb`: Reproducing the spatial heterogeneity results in the BLS dataset using a different pre-trained normative model by [Rutherford et al. (2022)](https://doi.org/10.7554/eLife.72904).
+1. `0.1_dataPrep_*.ipynb`: Preparation of meta- and imaging data for the respective dataset, including quality control, averaging across hemispheres, data harmonization (if applicable), preparation of the input file for subsequent normative modeling. *Expected runtime: < 5 minutes per dataset.*
+2. `1_spatialHeterogeneity.ipynb`: Contrasting average dysmaturation outcomes (based on group comparisons with two-sample t-tests) and individual brain abnormality patterns (IBAPs) obtained via normative modeling. We show that brain aberrations after preterm birth are spatially heterogeneous between individuals in all three datasets. This script should be run for all datasets and the modalities cortical thickness `CT` and surface area `SA`. *Expected runtime (depending on dataset size and CPU usage): up to 1 hour per dataset and modality*.
+3. `2_macrosaleConsistency.ipynb`: Investigating the temporal consistency of individual brain abnormality patterns (IBAPs) across the life course. We demonstrate that the extent and location of brain abnormalities are consistent in individual development. *Expected runtime: < 5 minutes.*
+4. `3_microscaleConsistency.ipynb`: Investigating the cellular underpinnings of IBAPs and their consistency across the life course. The analysis shows that glial cells underpin adult IBAPs, which is complementary to postmortem findings of glial damage in preterm neonates. *Expected runtime: up to 2 hours.*
+5. `4_developmentalPlasticity_IQ.ipynb`: Assessing the plasticity of IBAPs in response to the early social environment and effects of adult IBAPs on cognitive outcome variability. We show that the early social environment influences the severity of brain abnormalities in preterm individuals and that the severity of IBAPs is linked to IQ in adulthood. *Expected runtime: < 5 minutes.*
+6. `Supp_Rutherford.ipynb`: Reproducing the spatial heterogeneity results in the BLS dataset using a different pre-trained normative model by [Rutherford et al. (2022)](https://doi.org/10.7554/eLife.72904). *Expected runtime: about 5-10 minutes.*
 
 ### `MATLAB script`
-Parts of Figure 6 were generated with `Fig6_concept.m` in MATLAB 2023b using Simple-Brain-Plot. 
+Parts of Figure 6 were generated with `Fig6_concept.m` in MATLAB 2023b using Simple-Brain-Plot. *Expected runtime: < 5 minutes.*
 
 ### `/code`
 Contains additional functions for analyses, which are imported in the Jupyter notebooks.
