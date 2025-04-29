@@ -238,7 +238,7 @@ def plot_percentage_outside_norm_groups(rois, ft_scores_df, pt_scores_df, age_th
     ax.set_yticklabels(rois_cortical_names)
         
     # set the x-axis limit    
-    plt.xlim(0, 40)
+    plt.xlim(0, 60)
 
     # add legend
     if add_legend is True:
