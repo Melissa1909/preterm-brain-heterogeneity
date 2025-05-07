@@ -61,67 +61,67 @@ def calculate_scanner_difference(data, rois, scanner_var, covars):
 
     return pd.DataFrame(data = {'ROI': rois, 'F-values': f_data_all, 'p-values': p_values_all, 'p-values_fdr': p_values_fdr})
 
-
-def dhcp_aparcstats2table(csv_files, brain_measure):
-    '''
-    Rearange individual freesurfer output files into one table. 
+# WAS NEEDED FOR RELEASE 2 DATA
+# def dhcp_aparcstats2table(csv_files, brain_measure):
+#     '''
+#     Rearange individual freesurfer output files into one table. 
     
-    filename: name of txt file, such as 'stps01.txt'.
-    '''
-    aparc = pd.DataFrame()
+#     filename: name of txt file, such as 'stps01.txt'.
+#     '''
+#     aparc = pd.DataFrame()
     
-    for file in csv_files:
-        # Extract subject name from the file path
-        dirname, subject_name = os.path.split(file)
-        subject_name=subject_name[:-15]
+#     for file in csv_files:
+#         # Extract subject name from the file path
+#         dirname, subject_name = os.path.split(file)
+#         subject_name=subject_name[:-15]
         
-        # Read the stats file
-        df = pd.read_csv(file, sep=',')
+#         # Read the stats file
+#         df = pd.read_csv(file, sep=',')
         
-        if brain_measure == 'CT':
-            # Set the subject name as the index for the extracted column
-            mri_data_sub = df[["ThickAvg"]].rename(columns = {"ThickAvg": subject_name})
+#         if brain_measure == 'CT':
+#             # Set the subject name as the index for the extracted column
+#             mri_data_sub = df[["ThickAvg"]].rename(columns = {"ThickAvg": subject_name})
 
-        elif brain_measure == 'SA':
-            mri_data_sub = df[["SurfArea"]].rename(columns = {"SurfArea": subject_name})
+#         elif brain_measure == 'SA':
+#             mri_data_sub = df[["SurfArea"]].rename(columns = {"SurfArea": subject_name})
             
-        else:
-            raise ValueError('brain_measure must be either CT or SA')
+#         else:
+#             raise ValueError('brain_measure must be either CT or SA')
         
         
-        # Append the extracted column to the summary DataFrame
-        mri_data_sub.index = df['StructName']
-        aparc = pd.concat([aparc, mri_data_sub], axis=1).copy()
+#         # Append the extracted column to the summary DataFrame
+#         mri_data_sub.index = df['StructName']
+#         aparc = pd.concat([aparc, mri_data_sub], axis=1).copy()
 
-    aparc = aparc.transpose()
-    if 'Medial_Wall' in aparc.columns:
-        aparc.drop('Medial_Wall',axis=1, inplace=True)
+#     aparc = aparc.transpose()
+#     if 'Medial_Wall' in aparc.columns:
+#         aparc.drop('Medial_Wall',axis=1, inplace=True)
         
-    return aparc
+#     return aparc
     
+# WAS NEEDED FOR RELEASE 2 DATA
+# def strip_dhcp_id(data):
+#     ''''
+#     Longitudinal data are saved in one df with subject_id-ses-id as index. This function strips the ses-id part of the index.
+#     '''
+#     subject=[]
+#     session=[]
+#     for row in data.index:
+#         # split the index into subject and session
+#         split = row.split('-')
+#         subject.append(split[1])
+#         session.append(split[3])
 
-def strip_dhcp_id(data):
-    ''''
-    Longitudinal data are saved in one df with subject_id-ses-id as index. This function strips the ses-id part of the index.
-    '''
-    subject=[]
-    session=[]
-    for row in data.index:
-        # split the index into subject and session
-        split = row.split('-')
-        subject.append(split[1])
-        session.append(split[3])
+#     # add to df
+#     data['Subject_ID'] = subject
+#     data['Session_ID'] = session
 
-    # add to df
-    data['Subject_ID'] = subject
-    data['Session_ID'] = session
+#     # adapt dtype
+#     data['Session_ID'] = data['Session_ID'].astype(int)
 
-    # adapt dtype
-    data['Session_ID'] = data['Session_ID'].astype(int)
-
-    # reset index
-    data.reset_index(inplace=True, drop=True)
-    return data
+#     # reset index
+#     data.reset_index(inplace=True, drop=True)
+#     return data
 
 
 def clean_line(line):
