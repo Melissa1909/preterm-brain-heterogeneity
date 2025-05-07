@@ -294,6 +294,36 @@ def plot_gene_exp(celltype, it_dir, out_dir, scale=1):
     plot_brain_map(ge, outname, cmap='YlOrRd', limits=(0.4, 0.7), scale=scale, fill=0.5)
 
 
+def plot_pc_loadings(loadings, out_dir, brain_measure_name, ylim=(0, 0.25)):
+    '''
+    Plot the loadings of PC1 per ROI.
+
+    loadings: df with loadings per ROI
+    out_dir: output directory
+    brain_measure: str, 'CTh' or 'SA'
+    ylim: tuple, y-axis limits
+    '''
+
+    fig, ax = plt.subplots(figsize=(8,4))
+    sns.barplot(x='ROI', y='PC1_loadings', data=loadings, hue='PC1_loadings', dodge=False, palette='RdYlBu_r', ax=ax)
+
+    ax.get_legend().remove()
+    
+    # labels
+    ax.set_xlabel('')
+    xticklabels = [x.get_text().split('_')[2] for x in ax.get_xticklabels()]  # remove centile_CTh from x-axis
+    ax.set_xticklabels(xticklabels, rotation=90, fontsize=10)
+    ax.set_ylabel('PC loading', fontsize=12)
+    ax.set_yticklabels(ax.get_yticklabels(), fontsize=10)
+    ax.set_ylim(ylim)
+    
+    ax.set_title(f'{brain_measure_name} PC1 loadings per region', fontsize=14)
+
+    sns.despine()
+
+    plt.tight_layout()
+    fig.savefig(os.path.join(out_dir, f'{brain_measure_name}_PC1_loadings.svg'), format='svg', dpi=300)
+    plt.show()
 
 
 
