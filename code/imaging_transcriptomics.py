@@ -3,9 +3,16 @@ from os.path import join
 import numpy as np
 import pandas as pd
 
+import nibabel as nib
+from nibabel.gifti import GiftiImage, GiftiDataArray
+
 from scipy.stats import spearmanr
-from enigmatoolbox.permutation_testing import spin_test
 from statsmodels.stats.multitest import multipletests
+
+from enigmatoolbox.permutation_testing import spin_test
+from neuromaps.stats import compare_images
+from neuromaps.nulls import burt2020
+
 
 
 def get_mean_expression_cell_type(cell_type, expression, cell_type_genes, out_dir):
@@ -58,14 +65,85 @@ def get_mean_expression_cell_type(cell_type, expression, cell_type_genes, out_di
     return expressionAllMean
 
 
-def cell_correlation(mean_expression, cortical_data, n_rot=1000, calculate_pspin=True):
+def generate_parcellation_file():
+    '''
+    Generate parcellation file for DK-68 atlas that is required for burt2020.
+    
+    Attention: requires FreeSurfer to be installed and the environment variable FREESURFER_HOME to be set.
+    '''
+    
+    freesurfer_home = os.environ.get('FREESURFER_HOME')
+    
+    for hemi in ['lh', 'rh']:
+        labels, _, _ = nib.freesurfer.read_annot(
+            os.path.join(freesurfer_home, 'subjects', 'fsaverage5', f'label/{hemi}.aparc.annot'), 
+            orig_ids=False)
+        
+        gii_array = GiftiDataArray(data=labels)   
+        gii_img = GiftiImage(darrays=[gii_array])
+    
+        os.makedirs('outputs/tmp', exist_ok=True)
+        nib.save(gii_img, f'outputs/tmp/{hemi}.aparc.label.gii')
+
+
+
+def cell_correlation(mean_expression, cortical_data, n_rot=1000, p_method='spin'):
     ''''
     Correlate mean gene expression of a specific cell type (mean_expression) with deviation scores for each subject.
     
     mean_expression: np.array, mean expression for cell type from get_mean_expression_cell_type()
     cortical_data: pd.DataFrame (nsub x 68), deviation scores per subject
     n_rot: int, how many times spin_test should be performed
-    calculate_pspin: bool, whether spin test correction for p-value should be performed (computationally intense)
+    p_method: which method to use for p-value calculation, 'spin', 'burt', or 'none'
+    '''
+    # create empty array for storing output
+    corr_coeffs = np.zeros([cortical_data.shape[0], 3])
+    
+    for s, sub in enumerate(cortical_data.index):
+        sub_df = cortical_data.loc[sub]
+        
+        r, p = spearmanr(mean_expression, sub_df)
+        
+        # calculate p-value with method that corrects for spatial autocorrelation
+        if p_method == 'spin':
+            pspin = spin_test(mean_expression, sub_df, n_rot=n_rot, type='spearman')
+            
+        elif p_method == 'burt':
+            generate_parcellation_file()
+            parcellation = ('outputs/tmp/lh.aparc.label.gii', 'outputs/tmp/rh.aparc.label.gii')
+            rotated = burt2020(data=mean_expression, atlas='fsaverage', density='10k',
+                                parcellation=parcellation, n_perm=n_rot, seed=1234)
+            r, pspin = compare_images(mean_expression, sub_df, nulls=rotated)
+            
+        elif p_method == 'none':
+            pspin = np.nan
+        else:
+            raise ValueError("p_method must be 'spin', 'burt', or 'none'")
+        
+        
+        # store output
+        corr_coeffs[s,0] = r
+        corr_coeffs[s,1] = p
+        corr_coeffs[s,2] = pspin
+        
+        # to df
+        corr_coeffs_df = pd.DataFrame(corr_coeffs, columns=['Spearman_r', 'p', f'p{p_method}'], index=cortical_data.index)
+        
+        # FDR correction
+        corr_coeffs_df['p_fdr'] = multipletests(corr_coeffs_df['p'], method='fdr_bh')[1]
+
+    return corr_coeffs_df
+
+
+
+def cell_correlation_burt(mean_expression, cortical_data, n_rot=1000):
+    ''''
+    Correlate mean gene expression of a specific cell type (mean_expression) with deviation scores for each subject.
+    This function is a modified version of the original cell_correlation function, which uses Burt's method for p-value calculation.
+    
+    mean_expression: np.array, mean expression for cell type from get_mean_expression_cell_type()
+    cortical_data: pd.DataFrame (nsub x 68), deviation scores per subject
+    n_rot: int, how many times spin_test should be performed
     '''
     # create empty array for storing output
     corr_coeffs = np.zeros([cortical_data.shape[0], 3])
