@@ -128,14 +128,15 @@ def clean_line(line):
         return [part.strip('"') for part in line.strip().split('\t')]
 
 
-def read_dhcp_18months(filename, meta_dir):
+def read_dhcp_meta(filename, meta_dir):
     '''
-    Function to read in the dHCP data from the 18 months follow-up. Data is stored in a txt file 
+    Function to read in the dHCP data from the 18 months follow-up and other meta information. Data is stored in a txt file 
     and therefore needs to be stripped.
     
     filename: name of txt file, such as 'stps01.txt'.
     '''
-    file_path=os.path.join(meta_dir, 'dHCP_restrictedLongData','1222825',filename)
+    #file_path=os.path.join(meta_dir, 'dHCP_restrictedLongData','1222825',filename)
+    file_path = os.path.join(meta_dir, filename)
 
     with open(file_path, 'r') as f:
         cleaned_data = [clean_line(line) for line in f]
