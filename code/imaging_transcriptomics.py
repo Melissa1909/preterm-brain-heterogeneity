@@ -113,7 +113,14 @@ def cell_correlation(mean_expression, cortical_data, n_rot=1000, p_method='spin'
             parcellation = ('outputs/tmp/lh.aparc.label.gii', 'outputs/tmp/rh.aparc.label.gii')
             rotated = burt2020(data=mean_expression, atlas='fsaverage', density='10k',
                                 parcellation=parcellation, n_perm=n_rot, seed=1234)
-            r, pspin = compare_images(mean_expression, sub_df, nulls=rotated)
+            r, pspin = compare_images(mean_expression, sub_df, nulls=rotated, metric='spearmanr')
+            
+        # elif p_method == 'burt':
+        #     generate_parcellation_file()
+        #     parcellation = ('outputs/tmp/lh.aparc.label.gii', 'outputs/tmp/rh.aparc.label.gii')
+        #     rotated = burt2020(data=mean_expression, atlas='fsaverage', density='10k',
+        #                         parcellation=parcellation, n_perm=n_rot, seed=1234)
+        #     r, pspin = compare_images(mean_expression, sub_df, nulls=rotated, metric='spearmanr')
             
         elif p_method == 'none':
             pspin = np.nan
@@ -136,36 +143,3 @@ def cell_correlation(mean_expression, cortical_data, n_rot=1000, p_method='spin'
 
 
 
-def cell_correlation_burt(mean_expression, cortical_data, n_rot=1000):
-    ''''
-    Correlate mean gene expression of a specific cell type (mean_expression) with deviation scores for each subject.
-    This function is a modified version of the original cell_correlation function, which uses Burt's method for p-value calculation.
-    
-    mean_expression: np.array, mean expression for cell type from get_mean_expression_cell_type()
-    cortical_data: pd.DataFrame (nsub x 68), deviation scores per subject
-    n_rot: int, how many times spin_test should be performed
-    '''
-    # create empty array for storing output
-    corr_coeffs = np.zeros([cortical_data.shape[0], 3])
-    
-    for s, sub in enumerate(cortical_data.index):
-        sub_df = cortical_data.loc[sub]
-        
-        r, p = spearmanr(mean_expression, sub_df)
-        if calculate_pspin:
-            pspin = spin_test(mean_expression, sub_df, n_rot=n_rot, type='spearman')
-        else:
-            pspin = np.nan
-        
-        # store output
-        corr_coeffs[s,0] = r
-        corr_coeffs[s,1] = p
-        corr_coeffs[s,2] = pspin
-        
-        # to df
-        corr_coeffs_df = pd.DataFrame(corr_coeffs, columns=['Spearman_r', 'p', 'pspin'], index=cortical_data.index)
-        
-        # FDR correction
-        corr_coeffs_df['p_fdr'] = multipletests(corr_coeffs_df['p'], method='fdr_bh')[1]
-
-    return corr_coeffs_df

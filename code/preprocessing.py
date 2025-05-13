@@ -124,41 +124,5 @@ def strip_dhcp_id(data):
     return data
 
 
-def clean_line(line):
-        return [part.strip('"') for part in line.strip().split('\t')]
 
 
-def read_dhcp_meta(filename, meta_dir):
-    '''
-    Function to read in the dHCP data from the 18 months follow-up and other meta information. Data is stored in a txt file 
-    and therefore needs to be stripped.
-    
-    filename: name of txt file, such as 'stps01.txt'.
-    '''
-    #file_path=os.path.join(meta_dir, 'dHCP_restrictedLongData','1222825',filename)
-    file_path = os.path.join(meta_dir, filename)
-
-    with open(file_path, 'r') as f:
-        cleaned_data = [clean_line(line) for line in f]
-        
-    df = pd.DataFrame(cleaned_data, columns=cleaned_data[0])
-    df = df.iloc[2:,:]
-    return df
-
-
-def reorder_vars(first_vars, df, idps):
-    '''
-    Function from Leon D Lotter to reorder the columns of a dataframe.
-    
-    first_vars: list of variables that should be at the beginning of the dataframe
-    df: dataframe to reorder
-    idps: list of independent variables
-    '''
-    idp_vars = []
-    for i in idps:
-        idp_vars += [c for c in df.columns if i in c]
-    return df[first_vars + [c for c in df.columns if c not in first_vars+idp_vars] + idp_vars].copy()
-
-
-def na():
-    return slice(None)

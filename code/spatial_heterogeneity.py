@@ -7,8 +7,76 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 import seaborn as sns
-
 sns.set_style('white')
+from statsmodels.stats.multitest import multipletests
+from statsmodels.formula.api import ols
+import math
+
+
+def calculate_cohens_d(data, roi):
+    '''
+    Calculates Cohen's d to estimate effect sizes.
+    data: pandas df
+    roi: name of roi, e.g. 'lh_CT_bankssts'
+    '''
+    
+    g1 = data[data['diagnosis'] == 0]
+    g2 = data[data['diagnosis'] == 1]
+    
+    # preterm stats
+    mean1 = g1[roi].mean()
+    std1 = g1[roi].std()
+    n1 = g1[roi].count()
+        
+    # fullterm stats
+    mean2 = g2[roi].mean()
+    std2 = g2[roi].std()
+    n2 = g2[roi].count()
+        
+    # cohen's d calculation
+    pooled_std = math.sqrt(((n1-1)*std1**2 + (n2-1)*std2**2) / (n1 + n2 - 2))
+    cohen_d = (mean1 - mean2) / pooled_std
+    
+    return cohen_d
+
+
+def group_comparison(rois, dat, covariates=['sex', 'age_days']):
+    '''
+    Perform a group comparison for each roi in rois using a linear model with the diagnosis as the predictor and the covariates as confounders.
+    Will also perform multiple comparisons correction using the Benjamini-Hochberg method.
+
+    rois: list of ROIs to perform the group comparison
+    dat: DataFrame containing the data
+    covariates: list of covariates to include in the model
+    '''
+    # Initialize an empty list to store the results
+    results = []
+
+    for roi in rois:
+        # add binary variable for diagnosis
+        dat['diagnosis'] = dat['dx'].map({'preterm': 1, 'CN': 0})
+
+        # fit the model
+        formula = f'{roi} ~ diagnosis + {" + ".join(covariates)}'
+        model = ols(formula, data=dat).fit()
+        
+        # extract the t-value and p-value for the diagnosis variable
+        t_value = model.tvalues['diagnosis']
+        p_value = model.pvalues['diagnosis']
+        
+        # calculate Cohen's d
+        d = calculate_cohens_d(dat, roi)
+        
+        results.append((roi, t_value, d, p_value))
+
+    # convert the results list to a DataFrame
+    result_df = pd.DataFrame(results, columns=['ROI', 't_statistic', 'Cohen_d', 'p_value'])
+
+    # correct for multiple comparisons
+    _, p_fdr, _, _ = multipletests(result_df['p_value'], method='fdr_bh')
+    result_df['p_fdr'] = p_fdr
+
+    return result_df
 
 
 def get_centile_scores_per_subject(analysis_dir, rois, base_file='result_deviation_CT_bankssts.csv'):

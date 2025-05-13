@@ -2,7 +2,7 @@ import os
 import pandas as pd
 from sklearn.decomposition import PCA
 
-from analysis_helpers import get_roi_names
+from utils import get_roi_names
 
 
 def conduct_pca(data, brain_measure='CT'):

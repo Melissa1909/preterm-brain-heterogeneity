@@ -1,5 +1,68 @@
 import os 
 import pandas as pd
+from abagen import fetch_desikan_killiany
+
+
+def get_roi_names(brain_measure, bilateral=True, global_vars=False):
+    '''
+    Get the names of the cortical Desikan-Killiany ROIs adding the correct modality and hemisphere prefix if needed.
+
+    brain_measure: brain_measure of the data (i.e., CT, SA)
+    bilateral: if True, the hemisphere prefixes will be added to the ROI names
+    global_vars: if True, global measures will be added to the output list (i.e., eTIV, WMV, GMV, and sGMV)
+    '''
+
+    atlas = fetch_desikan_killiany(surface=True)
+    atlas = pd.read_csv(atlas['info'])
+    atlas = atlas[(atlas['structure'] == 'cortex') & (atlas['hemisphere'] == 'L')]
+    labels = atlas['label'].tolist()
+
+    if bilateral == False:
+        rois = ['lh_'+ brain_measure + '_' + label for label in labels] + ['rh_'+ brain_measure + '_' + label for label in labels]
+    else:
+        rois = [brain_measure + '_' + label for label in labels]
+
+    if global_vars == True:
+        rois += ['WMV', 'GMV', 'sGMV']
+
+    return rois
+
+
+def reorder_vars(first_vars, df, idps):
+    '''
+    Function from Leon D Lotter to reorder the columns of a dataframe.
+    
+    first_vars: list of variables that should be at the beginning of the dataframe
+    df: dataframe to reorder
+    idps: list of independent variables
+    '''
+    idp_vars = []
+    for i in idps:
+        idp_vars += [c for c in df.columns if i in c]
+    return df[first_vars + [c for c in df.columns if c not in first_vars+idp_vars] + idp_vars].copy()
+
+
+def na():
+    return slice(None)
+
+
+def clean_line(line):
+        return [part.strip('"') for part in line.strip().split('\t')]
+
+
+def read_dhcp_meta(file_path):
+    '''
+    Function to read in the dHCP data from the 18 months follow-up and other meta information. Data is stored in a txt file 
+    and therefore needs to be stripped.
+    
+    file_path: path to the txt file, such as 'stps01.txt'.
+    '''
+    with open(file_path, 'r') as f:
+        cleaned_data = [clean_line(line) for line in f]
+        
+    df = pd.DataFrame(cleaned_data, columns=cleaned_data[0])
+    df = df.iloc[2:,:]
+    return df
 
 
 def read_process_output(file_path):
