@@ -1,0 +1,5 @@
+# Ignore everything in this folder
+BLS*
+braincharts/*
+# Except this file
+!.gitignore

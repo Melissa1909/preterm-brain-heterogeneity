@@ -326,47 +326,36 @@ def plot_pc_loadings(loadings, out_dir, brain_measure_name, ylim=(0, 0.25)):
     plt.show()
 
 
+def plot_rutherford_results(x, y1, y2, idp_order, color_theme, title, outname):
+    sns.set_style('white')
+    
+    # combine y1 and y2 into one df
+    df = pd.DataFrame({'Supranormal deviation': y1, 'Infranormal deviation': y2, 'ROI': idp_order})
+    # Reverse order for bottom-to-top plotting
+    df = df.iloc[::-1].reset_index(drop=True)
+    
+    # Plotting
+    fig, ax = plt.subplots(figsize=(6, 16), dpi=50)
+
+    df[['Supranormal deviation', 'Infranormal deviation']].plot(
+        kind='barh',
+        ax=ax,
+        color=color_theme
+    )
+    
+    ax.set_title(title)
+    ax.set_ylabel('')
+    yticks = [i.split('_')[1] + ' ' + i.split('_')[2] for i in df['ROI']]
+    ax.set_yticklabels(yticks)
+    
+    ax.set_xlabel('Subjects with extranormal deviations [%]')
+    ax.set_xlim(0, 27)
+    ax.legend('')
+    
+    plt.tight_layout()
+    sns.despine()
+    plt.savefig(outname)
+    plt.show()
+    return df
 
 
-
-
-# def plot_percentage_outside_norm_supp(rois, ft_scores_df, pt_scores_df, age_thr_lower, age_thr_upper, outname, add_legend=False):
-#     '''
-#     Plot the percentage outside the normal range (i.e., <5th or >95th percentile) for each ROI.
-
-#     rois: list of ROIs
-#     ft_scores_df: dev scores of FT group
-#     pt_scores_df: dev scores of PT group
-#     age_thr_lower: what was used as a age threshold; e.g., 28 weeks
-#     age_thr_upper: what was used as a age threshold; e.g., 28 weeks
-#     outname: name of the file where figure should be saved
-#     add_legend: whether to add a legend, default is False
-#     '''
-#     infra_supra_all = calc_infra_supra_amounts(rois, ft_scores_df, pt_scores_df)
-
-#     fsize=8
-#     ax = infra_supra_all.plot(x='rois', y=['infranormal_ft','supranormal_ft','infranormal_pt','supranormal_pt'], kind="barh", rot=0,
-#                                 figsize=(3,12),fontsize=fsize,color=['dimgray','lightgray', 'mediumblue', 'red'],
-#                                 legend=False)
-
-#     ax.invert_yaxis()  # labels read top-to-bottom
-#     ax.set_xlabel('Subjects with extranormal deviation [%]',fontsize=8)
-#     ax.set_ylabel('')
-#     rois_cortical_names = ['CTh ' + roi.split('_')[1] for roi in rois]
-#     ax.set_yticklabels(rois_cortical_names)
-
-#     # set the x-axis limit
-#     #xlim = np.round(infra_supra_all[['infranormal_ft','supranormal_ft','infranormal_pt','supranormal_pt']].max().max()*1.1)
-#     #print(xlim)
-#     xlim = 60
-#     plt.xlim(0, xlim)
-
-#     # add legend
-#     if add_legend is True:
-#         legend=ax.legend(['Infranormal FT','Supranormal FT','Infranormal PT','Supranormal PT'],fontsize=fsize, loc ='lower right')
-#         legend.get_frame().set_facecolor('white')
-
-
-#     plt.title('GA between {0} and {1}'.format(age_thr_lower, age_thr_upper), fontsize=fsize+2)
-#     plt.savefig(outname,bbox_inches="tight",dpi=300)
-#     plt.show()
