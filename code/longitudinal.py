@@ -4,6 +4,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 
+import pingouin
+from statsmodels.stats.multitest import multipletests
 
 import sys
 sys.path.append('../code/')
@@ -78,6 +80,44 @@ def plot_longitudinal_data_subplots(df, rois, modality, out_dir_fig=os.getcwd(),
     plt.show()
 
 
+def compute_longitudinal_icc(df_pt, rois_cortical_centiles, outname):
+    '''
+    Compute ICC for longitudinal data.
+    : param df_pt: DataFrame containing data for two timepoints
+    : param rois_cortical_centiles: List of ROIs to compute ICC for (e.g., ['centile_CT_bankssts'])
+    : param outname: Output filename for the ICC results
+    
+    : return: DataFrame with ICC values for each ROI
+    '''
+    
+    icc_results = {}
+
+    for region in df_pt[rois_cortical_centiles]:
+        if region == 'centile_SA_entorhinal':
+            continue
+        
+        # compute ICC
+        icc = pingouin.intraclass_corr(data=df_pt, targets='participant', raters='timepoint', ratings=region, nan_policy='omit')
+        
+        # Extract ICC(3,1): timepoint treated as fixed effect
+        icc_value = icc.loc[(icc['Type'] == 'ICC3') & (icc['CI95%'].notnull()), 'ICC'].values[0]
+        p_value = icc.loc[(icc['Type'] == 'ICC3') & (icc['CI95%'].notnull()), 'pval'].values[0]
+        
+        # store into dictionary
+        icc_results[region] = (icc_value, p_value)
+        
+    # Convert to df
+    icc_df = pd.DataFrame.from_dict(icc_results, orient='index', columns=['ICC', 'pvalue'])
+    icc_df['p_fdr'] = multipletests(icc_df['pvalue'], method='fdr_bh')[1]
+    
+    # save to csv
+    icc_df.to_csv(outname, index=True)
+
+    return icc_df
+    
+    
+    
+    
 # def plot_raw_longitudinal_data_subplots(df, rois, modality, out_dir_fig=os.getcwd()):
 #     '''
 #     Plot longitudinal data for raw CT or SA in the rois list in individual subplots.
