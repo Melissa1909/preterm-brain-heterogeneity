@@ -190,21 +190,30 @@ def binarize_extranormal(data):
     return data_bin
 
 
-def plot_binarized_extranormal(data_bin, title, outname):
+def plot_binarized_extranormal(data_bin, title, outname, bin=True):
     '''
     Plot the binarized extranormal deviations.
     
     data_bin: pd.DataFrame, binarized deviation scores of preterm subjects
     title: str, title of the plot
     outname: str, path where the plot should be saved to
+    bin: bool, if True, use binary color map, otherwise use diverging color map
     '''
-    fig = plt.figure(figsize=(2.5, 4))
-    heatmap = sns.heatmap(data_bin, cmap=['white','k'], cbar=False, figure=fig)
+    if bin:
+        fig = plt.figure(figsize=(2.5, 4))
+        heatmap = sns.heatmap(data_bin, cmap=['white','k'], cbar=False, figure=fig)
+        plt.xlabel('ROIs', fontsize=10)
+        plt.ylabel('Subject-IDs', fontsize=10)
+        
+    else:  # for supplementary figure
+        fig = plt.figure(figsize=(5, 2.5))
+        heatmap = sns.heatmap(data_bin.T, cmap='RdBu_r', center=0.5, cbar=True, 
+                                cbar_kws={'label': 'Deviation score'}, figure=fig)
+        heatmap.collections[0].colorbar.ax.yaxis.label.set_size(10)   
+        plt.xlabel('Subject-IDs', fontsize=10)
+        plt.ylabel('ROIs', fontsize=10)     
+        
     plt.title(title)
-
-    plt.ylabel('Subject-IDs', fontsize=10)
-    heatmap.set_xticklabels('')
-    plt.xlabel('ROIs', fontsize=10)
     heatmap.set_xticklabels('')
     heatmap.set_yticklabels('')
 
