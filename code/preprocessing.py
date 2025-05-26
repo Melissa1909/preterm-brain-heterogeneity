@@ -83,6 +83,7 @@ def calculate_scanner_difference(data, rois, scanner_var, covars):
 #             mri_data_sub = df[["ThickAvg"]].rename(columns = {"ThickAvg": subject_name})
 
 
+
 #         elif brain_measure == 'SA':
 #             mri_data_sub = df[["SurfArea"]].rename(columns = {"SurfArea": subject_name})
             
