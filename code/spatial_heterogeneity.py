@@ -90,7 +90,6 @@ def group_comparison(rois, dat, covariates=['sex', 'age_days']):
     return result_df
 
 
-
 def get_centile_scores_per_subject(analysis_dir, rois, base_file='result_deviation_CT_middletemporal.csv'):
     '''
     Load centile scores for each ROI computed in the braincharts framework.

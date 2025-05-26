@@ -84,6 +84,7 @@ def calculate_scanner_difference(data, rois, scanner_var, covars):
 
 
 
+
 #         elif brain_measure == 'SA':
 #             mri_data_sub = df[["SurfArea"]].rename(columns = {"SurfArea": subject_name})
             
@@ -197,6 +198,7 @@ def reorder_vars(first_vars, df, idps):
         
 #     return aparc
     
+
 
 
 
