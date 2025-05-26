@@ -1,7 +1,0 @@
-# Ignore everything in this folder
-braincharts_model_adapted*/*
-IBAP_CT/*_centiles_per_subject.csv
-IBAP_SA/*_centiles_per_subject.csv
-
-# Except this file
-!.gitignore

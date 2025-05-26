@@ -9,9 +9,89 @@ from matplotlib.gridspec import GridSpec
 import seaborn as sns
 
 sns.set_style('white')
+from statsmodels.stats.multitest import multipletests
+from statsmodels.formula.api import ols
+import math
 
 
-def get_centile_scores_per_subject(analysis_dir, rois, base_file='result_deviation_CT_bankssts.csv'):
+def calculate_cohens_d(data, roi):
+    '''
+    Calculates Cohen's d to estimate effect sizes.
+    data: pandas df
+    roi: name of roi, e.g. 'lh_CT_bankssts'
+    '''
+    
+    g1 = data[data['diagnosis'] == 0]
+    g2 = data[data['diagnosis'] == 1]
+    
+    # preterm stats
+    mean1 = g1[roi].mean()
+    std1 = g1[roi].std()
+    n1 = g1[roi].count()
+        
+    # fullterm stats
+    mean2 = g2[roi].mean()
+    std2 = g2[roi].std()
+    n2 = g2[roi].count()
+        
+    # cohen's d calculation
+    pooled_std = math.sqrt(((n1-1)*std1**2 + (n2-1)*std2**2) / (n1 + n2 - 2))
+    cohen_d = (mean1 - mean2) / pooled_std
+    
+    return cohen_d
+
+
+def group_comparison(rois, dat, covariates=['sex', 'age_days']):
+    '''
+    Perform a group comparison for each roi in rois using a linear model with the diagnosis as the predictor and the covariates as confounders.
+    Will also perform multiple comparisons correction using the Benjamini-Hochberg method.
+
+    rois: list of ROIs to perform the group comparison
+    dat: DataFrame containing the data
+    covariates: list of covariates to include in the model
+    '''
+    # Initialize an empty list to store the results
+    results = []
+
+    for roi in rois:
+        if not dat[roi].isnull().all():
+            # Skip ROIs that are completely NaN
+            # add binary variable for diagnosis
+            dat['diagnosis'] = dat['dx'].map({'preterm': 1, 'CN': 0})
+
+            # fit the model
+            formula = f'{roi} ~ diagnosis + {" + ".join(covariates)}'
+            model = ols(formula, data=dat).fit()
+            
+            # extract the t-value and p-value for the diagnosis variable
+            t_value = model.tvalues['diagnosis']
+            p_value = model.pvalues['diagnosis']
+            
+            # calculate Cohen's d
+            d = calculate_cohens_d(dat, roi)
+            
+            results.append((roi, t_value, d, p_value))
+        else:
+            # If the ROI is completely NaN, append NaN values
+            results.append((roi, np.nan, np.nan, np.nan))
+
+    # convert the results list to a DataFrame
+    result_df = pd.DataFrame(results, columns=['ROI', 't_statistic', 'Cohen_d', 'p_value'])
+
+    # correct for multiple comparisons
+    p_values = result_df['p_value']
+    valid_mask = p_values.notna()
+    corrected_p = np.full_like(p_values, np.nan, dtype=np.double)
+    
+    _, p_fdr, _, _ = multipletests(p_values[valid_mask], method='fdr_bh')
+    corrected_p[valid_mask] = p_fdr
+    result_df['p_fdr'] = corrected_p
+
+    return result_df
+
+
+
+def get_centile_scores_per_subject(analysis_dir, rois, base_file='result_deviation_CT_middletemporal.csv'):
     '''
     Load centile scores for each ROI computed in the braincharts framework.
     
@@ -28,21 +108,28 @@ def get_centile_scores_per_subject(analysis_dir, rois, base_file='result_deviati
     session = base_df['session'].values
 
     # Initialize an empty array to store centile scores
-    centile_scores = np.zeros((len(participants), len(rois)))
+    centile_scores = np.full((len(participants), len(rois)), np.nan)
 
     # # Iterate over each ROI to collect centile scores
-    for i, roi in enumerate(rois):
+    for r, roi in enumerate(rois):
+        roi_file = os.path.join(analysis_dir, f'result_deviation_{roi}.csv')
+        
+        if not os.path.exists(roi_file):
+            print(f"File not found for ROI {roi}: {roi_file} - skipping.")
+            continue 
         # Skip entorhinal modeling for SA
-        if roi == 'SA_entorhinal':
-            centile_scores[:, i] = np.nan
-            continue
+        # if roi == 'SA_entorhinal':
+        #     centile_scores[:, i] = np.nan
+        #     continue
         
         # Load the centile score data for the current ROI
-        roi_file = os.path.join(analysis_dir, f'result_deviation_{roi}.csv')
-        roi_data = pd.read_csv(roi_file)
-        
-        # Align the centile scores with the participant IDs
-        centile_scores[:, i] = roi_data['centile_score'].values
+        try:
+            roi_data = pd.read_csv(roi_file)
+            centile_scores[:, r] = roi_data['centile_score'].values
+        except Exception as e:
+            print(f"Error reading or processing {roi_file}: {e}")
+            continue
+
 
     # Convert the array to a DataFrame
     cent_df = pd.DataFrame(centile_scores, columns=[f'centile_{roi}' for roi in rois])
