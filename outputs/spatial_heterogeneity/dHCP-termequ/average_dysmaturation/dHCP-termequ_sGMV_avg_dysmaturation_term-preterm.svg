@@ -6,11 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-    <dc:date>2024-12-02T07:58:09.075468</dc:date>
-=======
-    <dc:date>2025-05-26T16:55:41.977488</dc:date>
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
+    <dc:date>2025-05-26T17:55:18.900508</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -206,11 +202,7 @@ z
     <g id="ytick_1">
      <g id="text_3">
       <!-- 8000 -->
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-      <g style="fill: #262626" transform="translate(30.637031 212.530898) scale(0.11 -0.11)">
-=======
       <g style="fill: #262626" transform="translate(30.637031 218.614674) scale(0.11 -0.11)">
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
        <defs>
         <path id="ArialMT-38" d="M 1131 2484 
 Q 781 2613 612 2850 
@@ -288,11 +280,7 @@ z
     <g id="ytick_2">
      <g id="text_4">
       <!-- 10000 -->
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-      <g style="fill: #262626" transform="translate(24.52 176.292901) scale(0.11 -0.11)">
-=======
       <g style="fill: #262626" transform="translate(24.52 187.828167) scale(0.11 -0.11)">
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
        <defs>
         <path id="ArialMT-31" d="M 2384 0 
 L 1822 0 
@@ -318,11 +306,7 @@ z
     <g id="ytick_3">
      <g id="text_5">
       <!-- 12000 -->
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-      <g style="fill: #262626" transform="translate(24.52 140.054905) scale(0.11 -0.11)">
-=======
       <g style="fill: #262626" transform="translate(24.52 157.04166) scale(0.11 -0.11)">
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
        <defs>
         <path id="ArialMT-32" d="M 3222 541 
 L 3222 0 
@@ -361,11 +345,7 @@ z
     <g id="ytick_4">
      <g id="text_6">
       <!-- 14000 -->
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-      <g style="fill: #262626" transform="translate(24.52 103.816908) scale(0.11 -0.11)">
-=======
       <g style="fill: #262626" transform="translate(24.52 126.255154) scale(0.11 -0.11)">
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
        <defs>
         <path id="ArialMT-34" d="M 2069 0 
 L 2069 1097 
@@ -398,11 +378,7 @@ z
     <g id="ytick_5">
      <g id="text_7">
       <!-- 16000 -->
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-      <g style="fill: #262626" transform="translate(24.52 67.578911) scale(0.11 -0.11)">
-=======
       <g style="fill: #262626" transform="translate(24.52 95.468647) scale(0.11 -0.11)">
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
        <defs>
         <path id="ArialMT-36" d="M 3184 3459 
 L 2625 3416 
@@ -449,11 +425,7 @@ z
     <g id="ytick_6">
      <g id="text_8">
       <!-- 18000 -->
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-      <g style="fill: #262626" transform="translate(24.52 31.340915) scale(0.11 -0.11)">
-=======
       <g style="fill: #262626" transform="translate(24.52 64.682141) scale(0.11 -0.11)">
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
        <use xlink:href="#ArialMT-31"/>
        <use xlink:href="#ArialMT-38" x="55.615234"/>
        <use xlink:href="#ArialMT-30" x="111.230469"/>
@@ -647,211 +619,7 @@ z
    </g>
    <g id="PolyCollection_1">
     <defs>
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-     <path id="mc8c81ad43c" d="M 106.078026 -36.484918 
-L 105.986832 -36.484918 
-L 105.961447 -38.43487 
-L 105.926045 -40.384821 
-L 105.878597 -42.334773 
-L 105.817271 -44.284725 
-L 105.740506 -46.234677 
-L 105.646958 -48.184628 
-L 105.535323 -50.13458 
-L 105.404068 -52.084532 
-L 105.251156 -54.034484 
-L 105.073837 -55.984435 
-L 104.868598 -57.934387 
-L 104.631314 -59.884339 
-L 104.357647 -61.834291 
-L 104.043674 -63.784243 
-L 103.686706 -65.734194 
-L 103.286138 -67.684146 
-L 102.844054 -69.634098 
-L 102.365256 -71.58405 
-L 101.856428 -73.534001 
-L 101.324387 -75.483953 
-L 100.773713 -77.433905 
-L 100.204384 -79.383857 
-L 99.610175 -81.333808 
-L 98.978443 -83.28376 
-L 98.291543 -85.233712 
-L 97.529675 -87.183664 
-L 96.674592 -89.133615 
-L 95.713446 -91.083567 
-L 94.642062 -93.033519 
-L 93.467055 -94.983471 
-L 92.206306 -96.933422 
-L 90.887503 -98.883374 
-L 89.54476 -100.833326 
-L 88.213752 -102.783278 
-L 86.926309 -104.733229 
-L 85.705737 -106.683181 
-L 84.56407 -108.633133 
-L 83.501886 -110.583085 
-L 82.510494 -112.533036 
-L 81.575508 -114.482988 
-L 80.68052 -116.43294 
-L 79.809845 -118.382892 
-L 78.950049 -120.332843 
-L 78.090757 -122.282795 
-L 77.225638 -124.232747 
-L 76.354262 -126.182699 
-L 75.484882 -128.132651 
-L 74.637334 -130.082602 
-L 73.844733 -132.032554 
-L 73.152625 -133.982506 
-L 72.614864 -135.932458 
-L 72.286405 -137.882409 
-L 72.214247 -139.832361 
-L 72.428495 -141.782313 
-L 72.935748 -143.732265 
-L 73.716697 -145.682216 
-L 74.728873 -147.632168 
-L 75.9142 -149.58212 
-L 77.209623 -151.532072 
-L 78.558085 -153.482023 
-L 79.916874 -155.431975 
-L 81.261118 -157.381927 
-L 82.581757 -159.331879 
-L 83.879196 -161.28183 
-L 85.155255 -163.231782 
-L 86.406499 -165.181734 
-L 87.621241 -167.131686 
-L 88.780914 -169.081637 
-L 89.864804 -171.031589 
-L 90.855993 -172.981541 
-L 91.746231 -174.931493 
-L 92.538207 -176.881444 
-L 93.244865 -178.831396 
-L 93.886474 -180.781348 
-L 94.486682 -182.7313 
-L 95.068791 -184.681252 
-L 95.653028 -186.631203 
-L 96.255069 -188.581155 
-L 96.885604 -190.531107 
-L 97.550481 -192.481059 
-L 98.250975 -194.43101 
-L 98.983881 -196.380962 
-L 99.741441 -198.330914 
-L 100.511365 -200.280866 
-L 101.27735 -202.230817 
-L 102.020387 -204.180769 
-L 102.720856 -206.130721 
-L 103.361037 -208.080673 
-L 103.927445 -210.030624 
-L 104.41238 -211.980576 
-L 104.814345 -213.930528 
-L 105.137342 -215.88048 
-L 105.389396 -217.830431 
-L 105.580785 -219.780383 
-L 105.722428 -221.730335 
-L 105.8247 -223.680287 
-L 105.89675 -225.630238 
-L 105.946223 -227.58019 
-L 105.97927 -229.530142 
-L 106.085588 -229.530142 
-L 106.085588 -229.530142 
-L 106.118635 -227.58019 
-L 106.168108 -225.630238 
-L 106.240158 -223.680287 
-L 106.34243 -221.730335 
-L 106.484073 -219.780383 
-L 106.675462 -217.830431 
-L 106.927516 -215.88048 
-L 107.250513 -213.930528 
-L 107.652478 -211.980576 
-L 108.137413 -210.030624 
-L 108.703821 -208.080673 
-L 109.344002 -206.130721 
-L 110.044471 -204.180769 
-L 110.787508 -202.230817 
-L 111.553493 -200.280866 
-L 112.323417 -198.330914 
-L 113.080977 -196.380962 
-L 113.813883 -194.43101 
-L 114.514377 -192.481059 
-L 115.179254 -190.531107 
-L 115.809788 -188.581155 
-L 116.41183 -186.631203 
-L 116.996067 -184.681252 
-L 117.578176 -182.7313 
-L 118.178384 -180.781348 
-L 118.819993 -178.831396 
-L 119.526651 -176.881444 
-L 120.318627 -174.931493 
-L 121.208865 -172.981541 
-L 122.200054 -171.031589 
-L 123.283944 -169.081637 
-L 124.443617 -167.131686 
-L 125.658359 -165.181734 
-L 126.909603 -163.231782 
-L 128.185662 -161.28183 
-L 129.483101 -159.331879 
-L 130.80374 -157.381927 
-L 132.147984 -155.431975 
-L 133.506772 -153.482023 
-L 134.855235 -151.532072 
-L 136.150658 -149.58212 
-L 137.335985 -147.632168 
-L 138.348161 -145.682216 
-L 139.12911 -143.732265 
-L 139.636363 -141.782313 
-L 139.850611 -139.832361 
-L 139.778453 -137.882409 
-L 139.449994 -135.932458 
-L 138.912233 -133.982506 
-L 138.220125 -132.032554 
-L 137.427524 -130.082602 
-L 136.579976 -128.132651 
-L 135.710596 -126.182699 
-L 134.83922 -124.232747 
-L 133.974101 -122.282795 
-L 133.114809 -120.332843 
-L 132.255013 -118.382892 
-L 131.384338 -116.43294 
-L 130.48935 -114.482988 
-L 129.554364 -112.533036 
-L 128.562972 -110.583085 
-L 127.500788 -108.633133 
-L 126.359121 -106.683181 
-L 125.138549 -104.733229 
-L 123.851106 -102.783278 
-L 122.520098 -100.833326 
-L 121.177355 -98.883374 
-L 119.858552 -96.933422 
-L 118.597803 -94.983471 
-L 117.422796 -93.033519 
-L 116.351412 -91.083567 
-L 115.390265 -89.133615 
-L 114.535183 -87.183664 
-L 113.773315 -85.233712 
-L 113.086415 -83.28376 
-L 112.454683 -81.333808 
-L 111.860474 -79.383857 
-L 111.291145 -77.433905 
-L 110.740471 -75.483953 
-L 110.20843 -73.534001 
-L 109.699602 -71.58405 
-L 109.220804 -69.634098 
-L 108.77872 -67.684146 
-L 108.378152 -65.734194 
-L 108.021184 -63.784243 
-L 107.707211 -61.834291 
-L 107.433544 -59.884339 
-L 107.19626 -57.934387 
-L 106.991021 -55.984435 
-L 106.813702 -54.034484 
-L 106.66079 -52.084532 
-L 106.529535 -50.13458 
-L 106.4179 -48.184628 
-L 106.324352 -46.234677 
-L 106.247587 -44.284725 
-L 106.186261 -42.334773 
-L 106.138813 -40.384821 
-L 106.103411 -38.43487 
-L 106.078026 -36.484918 
-=======
-     <path id="mf7fd96567f" d="M 106.065276 -66.064347 
+     <path id="m0d039d6b0d" d="M 106.065276 -66.064347 
 L 105.999582 -66.064347 
 L 105.97995 -67.678449 
 L 105.952621 -69.292551 
@@ -1053,226 +821,16 @@ L 106.148185 -70.906652
 L 106.112237 -69.292551 
 L 106.084908 -67.678449 
 L 106.065276 -66.064347 
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
 z
-" style="stroke: #4c4c4c; stroke-width: 1.25"/>
+" style="stroke: #4c4c4c; stroke-width: 0.5"/>
     </defs>
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-    <g clip-path="url(#p4afa36eff8)">
-     <use xlink:href="#mc8c81ad43c" x="0" y="255.719844" style="fill: #5573cd; stroke: #4c4c4c; stroke-width: 1.25"/>
-=======
-    <g clip-path="url(#pcf5fbe0671)">
-     <use xlink:href="#mf7fd96567f" x="0" y="255.719844" style="fill: #5573cd; stroke: #4c4c4c; stroke-width: 0.5"/>
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
+    <g clip-path="url(#p4d68b2bdab)">
+     <use xlink:href="#m0d039d6b0d" x="0" y="255.719844" style="fill: #5573cd; stroke: #4c4c4c; stroke-width: 0.5"/>
     </g>
    </g>
    <g id="PolyCollection_2">
     <defs>
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-     <path id="mcf8b208a83" d="M 190.967599 -54.130613 
-L 190.188168 -54.130613 
-L 190.042579 -55.917035 
-L 189.855835 -57.703457 
-L 189.621199 -59.489879 
-L 189.332377 -61.276301 
-L 188.984025 -63.062724 
-L 188.572265 -64.849146 
-L 188.095151 -66.635568 
-L 187.553022 -68.42199 
-L 186.948668 -70.208412 
-L 186.287249 -71.994834 
-L 185.57595 -73.781256 
-L 184.823352 -75.567678 
-L 184.038576 -77.3541 
-L 183.230267 -79.140522 
-L 182.40554 -80.926945 
-L 181.569016 -82.713367 
-L 180.722099 -84.499789 
-L 179.862611 -86.286211 
-L 178.984877 -88.072633 
-L 178.080304 -89.859055 
-L 177.138407 -91.645477 
-L 176.148203 -93.431899 
-L 175.099803 -95.218321 
-L 173.986032 -97.004743 
-L 172.803848 -98.791166 
-L 171.555403 -100.577588 
-L 170.248593 -102.36401 
-L 168.897036 -104.150432 
-L 167.51948 -105.936854 
-L 166.13871 -107.723276 
-L 164.780105 -109.509698 
-L 163.469983 -111.29612 
-L 162.233925 -113.082542 
-L 161.095214 -114.868964 
-L 160.073502 -116.655386 
-L 159.18379 -118.441809 
-L 158.43572 -120.228231 
-L 157.833215 -122.014653 
-L 157.374423 -123.801075 
-L 157.051976 -125.587497 
-L 156.853531 -127.373919 
-L 156.762609 -129.160341 
-L 156.759702 -130.946763 
-L 156.823614 -132.733185 
-L 156.932977 -134.519607 
-L 157.067816 -136.30603 
-L 157.211032 -138.092452 
-L 157.349652 -139.878874 
-L 157.475687 -141.665296 
-L 157.586528 -143.451718 
-L 157.684815 -145.23814 
-L 157.777846 -147.024562 
-L 157.876607 -148.810984 
-L 157.994588 -150.597406 
-L 158.146531 -152.383828 
-L 158.347262 -154.170251 
-L 158.610695 -155.956673 
-L 158.94907 -157.743095 
-L 159.372403 -159.529517 
-L 159.888133 -161.315939 
-L 160.500902 -163.102361 
-L 161.212444 -164.888783 
-L 162.021546 -166.675205 
-L 162.924093 -168.461627 
-L 163.913202 -170.248049 
-L 164.979462 -172.034472 
-L 166.1113 -173.820894 
-L 167.295451 -175.607316 
-L 168.517514 -177.393738 
-L 169.762573 -179.18016 
-L 171.015819 -180.966582 
-L 172.263151 -182.753004 
-L 173.491719 -184.539426 
-L 174.690387 -186.325848 
-L 175.850092 -188.11227 
-L 176.96408 -189.898692 
-L 178.028006 -191.685115 
-L 179.039874 -193.471537 
-L 179.999807 -195.257959 
-L 180.909655 -197.044381 
-L 181.77246 -198.830803 
-L 182.591829 -200.617225 
-L 183.371287 -202.403647 
-L 184.113689 -204.190069 
-L 184.820769 -205.976491 
-L 185.492891 -207.762913 
-L 186.129035 -209.549336 
-L 186.727009 -211.335758 
-L 187.283844 -213.12218 
-L 187.796315 -214.908602 
-L 188.261478 -216.695024 
-L 188.677169 -218.481446 
-L 189.042373 -220.267868 
-L 189.357435 -222.05429 
-L 189.624094 -223.840712 
-L 189.845356 -225.627134 
-L 190.025252 -227.413557 
-L 190.168511 -229.199979 
-L 190.280218 -230.986401 
-L 190.875549 -230.986401 
-L 190.875549 -230.986401 
-L 190.987256 -229.199979 
-L 191.130515 -227.413557 
-L 191.310411 -225.627134 
-L 191.531673 -223.840712 
-L 191.798332 -222.05429 
-L 192.113394 -220.267868 
-L 192.478598 -218.481446 
-L 192.894289 -216.695024 
-L 193.359452 -214.908602 
-L 193.871923 -213.12218 
-L 194.428758 -211.335758 
-L 195.026732 -209.549336 
-L 195.662876 -207.762913 
-L 196.334998 -205.976491 
-L 197.042078 -204.190069 
-L 197.78448 -202.403647 
-L 198.563938 -200.617225 
-L 199.383307 -198.830803 
-L 200.246112 -197.044381 
-L 201.15596 -195.257959 
-L 202.115893 -193.471537 
-L 203.127761 -191.685115 
-L 204.191687 -189.898692 
-L 205.305675 -188.11227 
-L 206.46538 -186.325848 
-L 207.664048 -184.539426 
-L 208.892616 -182.753004 
-L 210.139948 -180.966582 
-L 211.393194 -179.18016 
-L 212.638253 -177.393738 
-L 213.860316 -175.607316 
-L 215.044467 -173.820894 
-L 216.176305 -172.034472 
-L 217.242565 -170.248049 
-L 218.231674 -168.461627 
-L 219.134221 -166.675205 
-L 219.943323 -164.888783 
-L 220.654865 -163.102361 
-L 221.267634 -161.315939 
-L 221.783364 -159.529517 
-L 222.206697 -157.743095 
-L 222.545072 -155.956673 
-L 222.808505 -154.170251 
-L 223.009236 -152.383828 
-L 223.161179 -150.597406 
-L 223.27916 -148.810984 
-L 223.377921 -147.024562 
-L 223.470952 -145.23814 
-L 223.569239 -143.451718 
-L 223.68008 -141.665296 
-L 223.806115 -139.878874 
-L 223.944735 -138.092452 
-L 224.087951 -136.30603 
-L 224.22279 -134.519607 
-L 224.332153 -132.733185 
-L 224.396065 -130.946763 
-L 224.393158 -129.160341 
-L 224.302236 -127.373919 
-L 224.103791 -125.587497 
-L 223.781344 -123.801075 
-L 223.322552 -122.014653 
-L 222.720047 -120.228231 
-L 221.971977 -118.441809 
-L 221.082265 -116.655386 
-L 220.060554 -114.868964 
-L 218.921842 -113.082542 
-L 217.685784 -111.29612 
-L 216.375662 -109.509698 
-L 215.017057 -107.723276 
-L 213.636287 -105.936854 
-L 212.258731 -104.150432 
-L 210.907174 -102.36401 
-L 209.600364 -100.577588 
-L 208.351919 -98.791166 
-L 207.169735 -97.004743 
-L 206.055964 -95.218321 
-L 205.007565 -93.431899 
-L 204.01736 -91.645477 
-L 203.075463 -89.859055 
-L 202.17089 -88.072633 
-L 201.293156 -86.286211 
-L 200.433668 -84.499789 
-L 199.586751 -82.713367 
-L 198.750227 -80.926945 
-L 197.9255 -79.140522 
-L 197.117191 -77.3541 
-L 196.332415 -75.567678 
-L 195.579817 -73.781256 
-L 194.868518 -71.994834 
-L 194.2071 -70.208412 
-L 193.602745 -68.42199 
-L 193.060616 -66.635568 
-L 192.583502 -64.849146 
-L 192.171742 -63.062724 
-L 191.82339 -61.276301 
-L 191.534568 -59.489879 
-L 191.299932 -57.703457 
-L 191.113189 -55.917035 
-L 190.967599 -54.130613 
-=======
-     <path id="m00b91a5bf5" d="M 190.674642 -36.240823 
+     <path id="mcc350eec3e" d="M 190.674642 -36.240823 
 L 190.481125 -36.240823 
 L 190.438589 -38.041317 
 L 190.383901 -39.84181 
@@ -1474,102 +1032,50 @@ L 190.839377 -41.642304
 L 190.771866 -39.84181 
 L 190.717178 -38.041317 
 L 190.674642 -36.240823 
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
 z
-" style="stroke: #4c4c4c; stroke-width: 1.25"/>
+" style="stroke: #4c4c4c; stroke-width: 0.5"/>
     </defs>
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-    <g clip-path="url(#p4afa36eff8)">
-     <use xlink:href="#mcf8b208a83" x="0" y="255.719844" style="fill: #df8920; stroke: #4c4c4c; stroke-width: 1.25"/>
-    </g>
-   </g>
-   <g id="line2d_1">
-    <path d="M 106.032429 192.386657 
-L 106.032429 44.229873 
-" clip-path="url(#p4afa36eff8)" style="fill: none; stroke: #4c4c4c; stroke-width: 1.875; stroke-linecap: round"/>
-   </g>
-   <g id="line2d_2">
-    <path d="M 106.032429 138.92089 
-L 106.032429 98.175793 
-" clip-path="url(#p4afa36eff8)" style="fill: none; stroke: #4c4c4c; stroke-width: 5.625; stroke-linecap: round"/>
-   </g>
-   <g id="line2d_3">
-    <path d="M 106.032429 117.80886 
-" clip-path="url(#p4afa36eff8)" style="fill: none; stroke: #4c4c4c; stroke-width: 1.5; stroke-linecap: round"/>
-    <defs>
-     <path id="m83054df6ea" d="M 2.34375 0 
-L -2.34375 -0 
-" style="stroke: #ffffff; stroke-width: 1.125"/>
-    </defs>
-    <g clip-path="url(#p4afa36eff8)">
-     <use xlink:href="#m83054df6ea" x="106.032429" y="117.80886" style="fill: #ffffff; stroke: #ffffff; stroke-width: 1.125"/>
-    </g>
-   </g>
-   <g id="line2d_4">
-    <path d="M 190.577884 177.103282 
-L 190.577884 49.219392 
-" clip-path="url(#p4afa36eff8)" style="fill: none; stroke: #4c4c4c; stroke-width: 1.875; stroke-linecap: round"/>
-   </g>
-   <g id="line2d_5">
-    <path d="M 190.577884 138.392608 
-L 190.577884 92.445093 
-" clip-path="url(#p4afa36eff8)" style="fill: none; stroke: #4c4c4c; stroke-width: 5.625; stroke-linecap: round"/>
-   </g>
-   <g id="line2d_6">
-    <path d="M 190.577884 117.277747 
-" clip-path="url(#p4afa36eff8)" style="fill: none; stroke: #4c4c4c; stroke-width: 1.5; stroke-linecap: round"/>
-    <g clip-path="url(#p4afa36eff8)">
-     <use xlink:href="#m83054df6ea" x="190.577884" y="117.277747" style="fill: #ffffff; stroke: #ffffff; stroke-width: 1.125"/>
-    </g>
-   </g>
-   <g id="line2d_7">
-    <path d="M 106.032429 31.392775 
-L 106.032429 27.113742 
-L 190.577884 27.113742 
-L 190.577884 31.392775 
-" style="fill: none; stroke: #333333; stroke-width: 1.5; stroke-linecap: round"/>
-=======
-    <g clip-path="url(#pcf5fbe0671)">
-     <use xlink:href="#m00b91a5bf5" x="0" y="255.719844" style="fill: #df8920; stroke: #4c4c4c; stroke-width: 0.5"/>
+    <g clip-path="url(#p4d68b2bdab)">
+     <use xlink:href="#mcc350eec3e" x="0" y="255.719844" style="fill: #df8920; stroke: #4c4c4c; stroke-width: 0.5"/>
     </g>
    </g>
    <g id="line2d_1">
     <path d="M 106.032429 176.000404 
 L 106.032429 43.514521 
-" clip-path="url(#pcf5fbe0671)" style="fill: none; stroke: #4c4c4c; stroke-width: 0.75; stroke-linecap: round"/>
+" clip-path="url(#p4d68b2bdab)" style="fill: none; stroke: #4c4c4c; stroke-width: 0.75; stroke-linecap: round"/>
    </g>
    <g id="line2d_2">
     <path d="M 106.032429 124.639852 
 L 106.032429 89.44414 
-" clip-path="url(#pcf5fbe0671)" style="fill: none; stroke: #4c4c4c; stroke-width: 2.25; stroke-linecap: round"/>
+" clip-path="url(#p4d68b2bdab)" style="fill: none; stroke: #4c4c4c; stroke-width: 2.25; stroke-linecap: round"/>
    </g>
    <g id="line2d_3">
     <path d="M 106.032429 108.477898 
-" clip-path="url(#pcf5fbe0671)" style="fill: none; stroke: #4c4c4c; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#p4d68b2bdab)" style="fill: none; stroke: #4c4c4c; stroke-width: 1.5; stroke-linecap: round"/>
     <defs>
-     <path id="me1c41d8e8f" d="M 0.9375 0 
+     <path id="m764fad2bf4" d="M 0.9375 0 
 L -0.9375 -0 
 " style="stroke: #ffffff; stroke-width: 0.45"/>
     </defs>
-    <g clip-path="url(#pcf5fbe0671)">
-     <use xlink:href="#me1c41d8e8f" x="106.032429" y="108.477898" style="fill: #ffffff; stroke: #ffffff; stroke-width: 0.45"/>
+    <g clip-path="url(#p4d68b2bdab)">
+     <use xlink:href="#m764fad2bf4" x="106.032429" y="108.477898" style="fill: #ffffff; stroke: #ffffff; stroke-width: 0.45"/>
     </g>
    </g>
    <g id="line2d_4">
     <path d="M 190.577884 179.612046 
 L 190.577884 60.404768 
-" clip-path="url(#pcf5fbe0671)" style="fill: none; stroke: #4c4c4c; stroke-width: 0.75; stroke-linecap: round"/>
+" clip-path="url(#p4d68b2bdab)" style="fill: none; stroke: #4c4c4c; stroke-width: 0.75; stroke-linecap: round"/>
    </g>
    <g id="line2d_5">
     <path d="M 190.577884 129.553667 
 L 190.577884 94.186705 
-" clip-path="url(#pcf5fbe0671)" style="fill: none; stroke: #4c4c4c; stroke-width: 2.25; stroke-linecap: round"/>
+" clip-path="url(#p4d68b2bdab)" style="fill: none; stroke: #4c4c4c; stroke-width: 2.25; stroke-linecap: round"/>
    </g>
    <g id="line2d_6">
     <path d="M 190.577884 115.214371 
-" clip-path="url(#pcf5fbe0671)" style="fill: none; stroke: #4c4c4c; stroke-width: 1.5; stroke-linecap: round"/>
-    <g clip-path="url(#pcf5fbe0671)">
-     <use xlink:href="#me1c41d8e8f" x="190.577884" y="115.214371" style="fill: #ffffff; stroke: #ffffff; stroke-width: 0.45"/>
+" clip-path="url(#p4d68b2bdab)" style="fill: none; stroke: #4c4c4c; stroke-width: 1.5; stroke-linecap: round"/>
+    <g clip-path="url(#p4d68b2bdab)">
+     <use xlink:href="#m764fad2bf4" x="190.577884" y="115.214371" style="fill: #ffffff; stroke: #ffffff; stroke-width: 0.45"/>
     </g>
    </g>
    <g id="line2d_7">
@@ -1578,7 +1084,6 @@ L 106.032429 26.827997
 L 190.577884 26.827997 
 L 190.577884 30.999628 
 " style="fill: none; stroke: #333333; stroke-width: 0.5; stroke-linecap: round"/>
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
    </g>
    <g id="patch_3">
     <path d="M 64.605156 228.96 
@@ -1590,15 +1095,9 @@ L 64.605156 7.2
 L 232.005156 228.96 
 " style="fill: none; stroke: #262626; stroke-width: 1.25; stroke-linejoin: miter; stroke-linecap: square"/>
    </g>
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-   <g id="text_10">
-    <!-- ns -->
-    <g style="fill: #262626" transform="translate(141.968594 23.728742) scale(0.12 -0.12)">
-=======
    <g id="text_11">
     <!-- ** -->
     <g style="fill: #262626" transform="translate(143.634531 23.442997) scale(0.12 -0.12)">
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
      <defs>
       <path id="ArialMT-2a" d="M 200 3741 
 L 344 4184 
@@ -1626,11 +1125,7 @@ z
   </g>
  </g>
  <defs>
-<<<<<<< Updated upstream:outputs/spatial_heterogeneity/dHCP/average_dysmaturation/dHCP_sGMV_avg_dysmaturation_term-preterm.svg
-  <clipPath id="p4afa36eff8">
-=======
-  <clipPath id="pcf5fbe0671">
->>>>>>> Stashed changes:outputs/spatial_heterogeneity/dHCP-termequ/average_dysmaturation/dHCP-termequ_sGMV_avg_dysmaturation_term-preterm.svg
+  <clipPath id="p4d68b2bdab">
    <rect x="64.605156" y="7.2" width="167.4" height="221.76"/>
   </clipPath>
  </defs>
