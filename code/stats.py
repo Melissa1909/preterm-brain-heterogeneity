@@ -1,5 +1,9 @@
 import os
 import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+
 from sklearn.decomposition import PCA
 
 from utils import get_roi_names
@@ -35,3 +39,53 @@ def conduct_pca(data, brain_measure='CT'):
     loadings_pc1 = pd.Series(loadings_pc1, index=data_stripped.columns, name='PC1_loadings')
     
     return pc_dev_scores, loadings_pc1
+
+
+
+def median_difference_centiles(group1, group2, n_permutations=1000, random_state=123):
+    """
+    Perform a permutation test to compare the means of two groups.
+    
+    Parameters:
+    - group1: array-like, first group of data
+    - group2: array-like, second group of data
+    - n_permutations: int, number of permutations to perform
+    
+    Returns:
+    - p_value: float, p-value from the permutation test
+    """
+    np.random.seed(random_state)
+    observed_diff = np.median(group1) - np.median(group2)
+    combined = np.concatenate([group1, group2])
+    
+    perm_diffs = []
+    count = 0
+    
+    for _ in range(n_permutations):
+        np.random.shuffle(combined)
+        perm_group1 = combined[:len(group1)]
+        perm_group2 = combined[len(group1):]
+        perm_diff = np.median(perm_group1) - np.median(perm_group2)
+        perm_diffs.append(perm_diff)
+        if abs(perm_diff) >= abs(observed_diff):
+            count += 1
+            
+    p_value = count / n_permutations
+    
+    return p_value, perm_diffs, observed_diff
+
+
+def plot_permuation_test(observed_diff, perm_diffs, roi, out_dir):
+    """
+    Plot the distribution of permutation test differences.
+    
+    Parameters:
+    - diffs: array-like, differences from the permutation test
+    """
+    plt.figure(figsize=(5, 3))
+    sns.histplot(perm_diffs, bins=30, kde=True)
+    plt.axvline(observed_diff, color='red', linestyle='--', label='Observed median difference')
+    plt.title(roi)
+    plt.xlabel('Difference in medians (FT - PT)')
+    plt.ylabel('Frequency')
+    #plt.savefig(os.path.join(out_dir, f'{roi}_median_difference_perm_test.svg'), bbox_inches='tight', dpi=300, format='svg')
