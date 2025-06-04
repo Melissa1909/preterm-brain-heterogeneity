@@ -20,3 +20,12 @@ code/BrainCharts/*
 code/processv43/*
 synthetic_data_generation.ipynb
 tmp_dhcp_release_comparison.ipynb
+
+
+# TRANSIENT
+outputs/consistency_microscale_old
+outputs/consistency_microscale/*
+code/3_microscale*
+code/imaging_transcriptimics.py
+requirements.txt
+
