@@ -160,7 +160,7 @@ def plot_individual_brain_maps(cortical_data, sub_id, outdir, scale=1, cmap='YlO
                     cmap='RdBu_r', limits=(-1,1), scale=scale, fill=0)
     
 
-def correlation_plot(x, y, data, color, xlabel, ylabel, outname, one_sided=False):
+def correlation_plot(x, y, data, color, xlabel, ylabel, outname, one_sided=False, return_p=False):
     '''
     Function to plot relation of x and y.
     
@@ -193,6 +193,10 @@ def correlation_plot(x, y, data, color, xlabel, ylabel, outname, one_sided=False
             textstr = '\n'.join((
                 r'$r=%.3f$' % (r),
                 r'$p_1=%.3f$' % (p)))
+    if p < 0.001:
+        textstr = '\n'.join((
+            r'$r=%.3f$' % (r),
+            r'$p<0.001$'))
     props = dict(boxstyle='round', facecolor='silver', alpha=0.4, edgecolor='silver')
     plot.text(0.03, 0.98, textstr, transform=plot.transAxes, fontsize=5, verticalalignment='top', bbox=props)
 
@@ -212,8 +216,11 @@ def correlation_plot(x, y, data, color, xlabel, ylabel, outname, one_sided=False
     plt.savefig(outname, dpi=300)
     plt.show()
     
+    if return_p:
+        return p
     
-def plot_percentage_outside_norm_groups(rois, ft_scores_df, pt_scores_df, age_thr_lower, age_thr_upper, outname, add_legend=False):
+    
+def plot_percentage_outside_norm_groups(rois, ft_scores_df, pt_scores_df, age_thr_lower, age_thr_upper, outname, add_legend=False, xlims=(0, 60)):
     '''
     Plot the percentage outside the normal range (i.e., <5th or >95th percentile) for each ROI.
 
@@ -224,6 +231,7 @@ def plot_percentage_outside_norm_groups(rois, ft_scores_df, pt_scores_df, age_th
     age_thr_upper: str, upper age threshold of gestational age
     outname: os.path, name of the file where figure should be saved
     add_legend: bool, whether to add a legend, default=False
+    xlims: tuple, x-axis limits, default=(0, 60)
     '''
     rois_cent = ['centile_' + roi for roi in rois]
     infra_supra_all = calc_infra_supra_percentage(rois_cent, ft_scores_df, pt_scores_df)
@@ -243,7 +251,7 @@ def plot_percentage_outside_norm_groups(rois, ft_scores_df, pt_scores_df, age_th
     ax.set_yticklabels(rois_cortical_names)
         
     # set the x-axis limit    
-    plt.xlim(0, 60)
+    plt.xlim(xlims)
 
     # add legend
     if add_legend is True:
