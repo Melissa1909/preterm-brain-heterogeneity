@@ -26,6 +26,12 @@ fit_braincharts_model <- function(roi, dat, sw_dir, out_dir, plotting, ncores = 
   # slice dat to include only current roi and meta information
   NewData <- dat[,1:10]
   NewData[[roi]] <- dat[[roi]]
+
+  # if roi is not in data, skip
+if (all(is.nan(NewData[[roi]]))) {
+  print(paste("ROI", roi, "is entirely NaN. Skipping..."))
+  return(NULL)
+}
   
   
   #------------------------- ADAPT MODEL TO NEW STUDY --------------------------------

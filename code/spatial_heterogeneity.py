@@ -39,7 +39,6 @@ def calculate_cohens_d(data, roi):
     
     return cohen_d
 
-
 def group_comparison(rois, dat, covariates=['sex', 'age_days']):
     '''
     Perform a group comparison for each roi in rois using a linear model with the diagnosis as the predictor and the covariates as confounders.
@@ -53,30 +52,79 @@ def group_comparison(rois, dat, covariates=['sex', 'age_days']):
     results = []
 
     for roi in rois:
-        # add binary variable for diagnosis
-        dat['diagnosis'] = dat['dx'].map({'preterm': 1, 'CN': 0})
+        if not dat[roi].isnull().all():
+            # Skip ROIs that are completely NaN
+            # add binary variable for diagnosis
+            dat['diagnosis'] = dat['dx'].map({'preterm': 1, 'CN': 0})
 
-        # fit the model
-        formula = f'{roi} ~ diagnosis + {" + ".join(covariates)}'
-        model = ols(formula, data=dat).fit()
-        
-        # extract the t-value and p-value for the diagnosis variable
-        t_value = model.tvalues['diagnosis']
-        p_value = model.pvalues['diagnosis']
-        
-        # calculate Cohen's d
-        d = calculate_cohens_d(dat, roi)
-        
-        results.append((roi, t_value, d, p_value))
+            # fit the model
+            formula = f'{roi} ~ diagnosis + {" + ".join(covariates)}'
+            model = ols(formula, data=dat).fit()
+            
+            # extract the t-value and p-value for the diagnosis variable
+            t_value = model.tvalues['diagnosis']
+            p_value = model.pvalues['diagnosis']
+            
+            # calculate Cohen's d
+            d = calculate_cohens_d(dat, roi)
+            
+            results.append((roi, t_value, d, p_value))
+        else:
+            # If the ROI is completely NaN, append NaN values
+            results.append((roi, np.nan, np.nan, np.nan))
 
     # convert the results list to a DataFrame
     result_df = pd.DataFrame(results, columns=['ROI', 't_statistic', 'Cohen_d', 'p_value'])
 
     # correct for multiple comparisons
-    _, p_fdr, _, _ = multipletests(result_df['p_value'], method='fdr_bh')
-    result_df['p_fdr'] = p_fdr
+    p_values = result_df['p_value']
+    valid_mask = p_values.notna()
+    corrected_p = np.full_like(p_values, np.nan, dtype=np.double)
+    
+    _, p_fdr, _, _ = multipletests(p_values[valid_mask], method='fdr_bh')
+    corrected_p[valid_mask] = p_fdr
+    result_df['p_fdr'] = corrected_p
 
     return result_df
+
+
+# def group_comparison(rois, dat, covariates=['sex', 'age_days']):
+#     '''
+#     Perform a group comparison for each roi in rois using a linear model with the diagnosis as the predictor and the covariates as confounders.
+#     Will also perform multiple comparisons correction using the Benjamini-Hochberg method.
+
+#     rois: list of ROIs to perform the group comparison
+#     dat: DataFrame containing the data
+#     covariates: list of covariates to include in the model
+#     '''
+#     # Initialize an empty list to store the results
+#     results = []
+
+#     for roi in rois:
+#         # add binary variable for diagnosis
+#         dat['diagnosis'] = dat['dx'].map({'preterm': 1, 'CN': 0})
+
+#         # fit the model
+#         formula = f'{roi} ~ diagnosis + {" + ".join(covariates)}'
+#         model = ols(formula, data=dat).fit()
+        
+#         # extract the t-value and p-value for the diagnosis variable
+#         t_value = model.tvalues['diagnosis']
+#         p_value = model.pvalues['diagnosis']
+        
+#         # calculate Cohen's d
+#         d = calculate_cohens_d(dat, roi)
+        
+#         results.append((roi, t_value, d, p_value))
+
+#     # convert the results list to a DataFrame
+#     result_df = pd.DataFrame(results, columns=['ROI', 't_statistic', 'Cohen_d', 'p_value'])
+
+#     # correct for multiple comparisons
+#     _, p_fdr, _, _ = multipletests(result_df['p_value'], method='fdr_bh')
+#     result_df['p_fdr'] = p_fdr
+
+#     return result_df
 
 
 def get_centile_scores_per_subject(analysis_dir, rois, base_file='result_deviation_CT_bankssts.csv'):
@@ -95,22 +143,29 @@ def get_centile_scores_per_subject(analysis_dir, rois, base_file='result_deviati
     participants = base_df['participant'].values
     session = base_df['session'].values
 
-    # Initialize an empty array to store centile scores
-    centile_scores = np.zeros((len(participants), len(rois)))
+# Initialize an empty array to store centile scores
+    centile_scores = np.full((len(participants), len(rois)), np.nan)
 
     # # Iterate over each ROI to collect centile scores
-    for i, roi in enumerate(rois):
+    for r, roi in enumerate(rois):
+        roi_file = os.path.join(analysis_dir, f'result_deviation_{roi}.csv')
+        
+        if not os.path.exists(roi_file):
+            print(f"File not found for ROI {roi}: {roi_file} - skipping.")
+            continue 
         # Skip entorhinal modeling for SA
-        if roi == 'SA_entorhinal':
-            centile_scores[:, i] = np.nan
-            continue
+        # if roi == 'SA_entorhinal':
+        #     centile_scores[:, i] = np.nan
+        #     continue
         
         # Load the centile score data for the current ROI
-        roi_file = os.path.join(analysis_dir, f'result_deviation_{roi}.csv')
-        roi_data = pd.read_csv(roi_file)
-        
-        # Align the centile scores with the participant IDs
-        centile_scores[:, i] = roi_data['centile_score'].values
+        try:
+            roi_data = pd.read_csv(roi_file)
+            centile_scores[:, r] = roi_data['centile_score'].values
+        except Exception as e:
+            print(f"Error reading or processing {roi_file}: {e}")
+            continue
+
 
     # Convert the array to a DataFrame
     cent_df = pd.DataFrame(centile_scores, columns=[f'centile_{roi}' for roi in rois])
@@ -120,6 +175,7 @@ def get_centile_scores_per_subject(analysis_dir, rois, base_file='result_deviati
     cent_df.insert(1, 'session', session)
 
     return cent_df
+
 
 
 def get_amount_infra_supra(cent_scores, infra_thr = 0.05, supra_thr = 0.95):

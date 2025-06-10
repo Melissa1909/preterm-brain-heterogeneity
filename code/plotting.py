@@ -7,12 +7,15 @@ import numpy as np
 from enigmatoolbox.utils.parcellation import parcel_to_surface
 from enigmatoolbox.plotting import plot_cortical
 from scipy.stats import spearmanr
+import statsmodels.api as sm
+from statsmodels.formula.api import ols
 
 import matplotlib
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter,FuncFormatter
 import seaborn as sns
 from statannotations.Annotator import Annotator
+
 import sys
 sys.path.append('')
 from spatial_heterogeneity import calc_infra_supra_percentage
@@ -70,10 +73,10 @@ def plot_brain_map(data, outname, cmap='RdBu_r', limits=(-5,5), scale=1, fill=0)
     print(f'Plotted brain map and saved it to {outname}')
 
 
-def plot_group_difference_global(data, x='dx', y='WMV', yaxis_label = f'WMV [mm$^3$]', 
+def plot_group_difference_global(data, x='dx', y='WMV', covars=['age_days', 'sex'], yaxis_label = f'WMV [mm$^3$]', 
                                     outname='group_difference_WMV.svg'):
     '''
-    Plot violin plot of global measures (e.g. WMV, GMV, mean CT) for term and preterm groups.
+    Plot violin plot of global measures (e.g. WMV, GMV, mean CT) adjusted for age and sex for term and preterm groups.
 
     data: pd.DataFrame, df containing the data for each subject
     x: str, group variable (e.g. 'dx')
@@ -81,23 +84,25 @@ def plot_group_difference_global(data, x='dx', y='WMV', yaxis_label = f'WMV [mm$
     yaxis_label: str, label for the y-axis
     outname: str, output filename for the figure
     '''
-    #cm = 1/2.54  # cm to inch
+    # get residuals from WMV ~ age + sex for plotting
+    formula = f'{y} ~ ' + ' + '.join(covars)
+    model = ols(data=data, formula=formula).fit()
+    data['adjusted_' + y] = model.resid  
+    
+    # plot the residuals
     order = ['CN', 'preterm']
-    plt.figure(figsize=(3,4))
-    ax = sns.violinplot(data=data, x=x, y=y, order=order, palette=['royalblue', 'darkorange'], 
+    plt.figure(figsize=(3,4))    
+    ax = sns.violinplot(data=data, x=x, y=f'adjusted_{y}', order=order, palette=['royalblue', 'darkorange'], 
                         fill=True, inner='box', linewidth=0.5)
     ax.set_xlabel('')
     ax.set_xticklabels(['Term', 'Preterm'])
     ax.set_ylabel(yaxis_label)
-    
-    # format y axis
-    # ax.yaxis.set_major_formatter(FuncFormatter(lambda x, _: f'{x/1e5:.1f}e5'))
     ax.yaxis.set_major_formatter(ScalarFormatter(useOffset=False))
     sns.despine()
 
     # add significance annotations
     pairs=[('CN', 'preterm')]
-    annotator = Annotator(ax, pairs, data=data, x=x, y=y, order=order)
+    annotator = Annotator(ax, pairs, data=data, x=x, y=f'adjusted_{y}', order=order)
     annotator.configure(test='t-test_ind', text_format='star', loc='inside', comparisons_correction='fdr_bh', line_width=0.5)
     annotator.apply_and_annotate()
 
