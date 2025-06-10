@@ -222,7 +222,7 @@ def plot_binarized_extranormal(data_bin, title, outname, bin=True):
     plt.show()
 
 
-def plot_correlation_matrix_kde(corr_matrix, outname, fsize=12):
+def plot_correlation_matrix_kde(corr_matrix, outname, fsize=12, across='subjects'):
     '''
     Plot a heatmap of the correlation matrix and a KDE plot of the average Spearman rho across subjects.
     
@@ -240,20 +240,28 @@ def plot_correlation_matrix_kde(corr_matrix, outname, fsize=12):
     heatmap = sns.heatmap(corr_matrix, cmap='vlag', vmax=1, vmin=-1, square=True, 
                             ax=ax_heatmap, cbar_ax=ax_cbar, 
                             cbar_kws={'orientation': 'horizontal', 'label': 'Spearman rho'}) 
-    ax_heatmap.set_xlabel('Subject-IDs', fontsize=fsize)
-    ax_heatmap.set_ylabel('Subject-IDs', fontsize=fsize)
-    ax_heatmap.set_xticklabels('')
-    ax_heatmap.set_yticklabels('')
     
     # KDE plot of avg spearman between subjects
     sns.set_style('whitegrid')
     ax_kde = fig.add_subplot(gs[0, 1])
     row_means = np.mean(corr_matrix, axis=1)  # average correlation per subject with all others
     sns.kdeplot(row_means, ax=ax_kde, vertical=True, fill=False, color='k')
-
-    ax_kde.set_ylabel('Average Spearman rho across subjects', fontsize=fsize)
     ax_kde.set_xlabel('Density', fontsize=fsize)
     ax_kde.set_ylim(-1, 1)
+    
+    
+    if across == 'subjects':
+        ax_heatmap.set_xlabel('Subject-IDs', fontsize=fsize)
+        ax_heatmap.set_ylabel('Subject-IDs', fontsize=fsize)
+        ax_kde.set_ylabel('Average Spearman rho per subject', fontsize=fsize)
+        
+    elif across == 'regions':
+        ax_heatmap.set_xlabel('ROIs', fontsize=fsize)
+        ax_heatmap.set_ylabel('ROIs', fontsize=fsize)
+        ax_kde.set_ylabel('Average Spearman rho per region', fontsize=fsize)
+
+    ax_heatmap.set_xticklabels('')
+    ax_heatmap.set_yticklabels('')
     
     plt.tight_layout()
     plt.savefig(outname, dpi=300)
