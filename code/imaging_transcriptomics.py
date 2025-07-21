@@ -11,7 +11,9 @@ from statsmodels.stats.multitest import multipletests
 
 from enigmatoolbox.permutation_testing import spin_test
 from neuromaps.stats import compare_images
-from neuromaps.nulls import burt2020
+from neuromaps.nulls import burt2020, alexander_bloch
+
+import abagen
 
 
 
@@ -102,25 +104,24 @@ def cell_correlation(mean_expression, cortical_data, n_rot=1000, p_method='spin'
     for s, sub in enumerate(cortical_data.index):
         sub_df = cortical_data.loc[sub]
         
-        r, p = spearmanr(mean_expression, sub_df)
+        _, p = spearmanr(mean_expression, sub_df)
         
         # calculate p-value with method that corrects for spatial autocorrelation
         if p_method == 'spin':
-            pspin = spin_test(mean_expression, sub_df, n_rot=n_rot, type='spearman')
+            r, pspin = spin_test(mean_expression, sub_df, n_rot=n_rot, type='spearman')
+            # parcellation = abagen.fetch_desikan_killiany(surface=True)
+            # parcellation = parcellation['image']
+            # rotated = alexander_bloch(data=mean_expression, atlas='fsaverage', density='10k', n_perm=n_rot, seed=1234,
+            #                             parcellation=parcellation)
+            # r, pspin = compare_images(mean_expression, sub_df, nulls=rotated, metric='spearmanr')
             
         elif p_method == 'burt':
-            generate_parcellation_file()
-            parcellation = ('outputs/tmp/lh.aparc.label.gii', 'outputs/tmp/rh.aparc.label.gii')
+            #generate_parcellation_file()
+            #parcellation = ('outputs/tmp/lh.aparc.label.gii', 'outputs/tmp/rh.aparc.label.gii')
             rotated = burt2020(data=mean_expression, atlas='fsaverage', density='10k',
                                 parcellation=parcellation, n_perm=n_rot, seed=1234)
             r, pspin = compare_images(mean_expression, sub_df, nulls=rotated, metric='spearmanr')
             
-        # elif p_method == 'burt':
-        #     generate_parcellation_file()
-        #     parcellation = ('outputs/tmp/lh.aparc.label.gii', 'outputs/tmp/rh.aparc.label.gii')
-        #     rotated = burt2020(data=mean_expression, atlas='fsaverage', density='10k',
-        #                         parcellation=parcellation, n_perm=n_rot, seed=1234)
-        #     r, pspin = compare_images(mean_expression, sub_df, nulls=rotated, metric='spearmanr')
             
         elif p_method == 'none':
             pspin = np.nan

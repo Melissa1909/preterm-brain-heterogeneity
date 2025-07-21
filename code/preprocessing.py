@@ -8,31 +8,31 @@ from pingouin import ancova
 from statsmodels.stats.multitest import multipletests
 
 
-# def load_freesurfer_aparc(file):
-#     '''
-#     Load aparc file created by FreeSurfer and combined with aparcstats2table.
+def load_freesurfer_aparc(file):
+    '''
+    Load aparc file created by FreeSurfer and combined with aparcstats2table.
     
-#     file: directory to the aparc file
-#     '''
-#     df = pd.read_csv(file, sep='\t')
+    file: directory to the aparc file
+    '''
+    df = pd.read_csv(file, sep='\t')
 
-#     # rename ?h.aparc.modality column to participant
-#     df.rename(columns=lambda col: 'participant' if 'aparc' in col else col, inplace=True)
-#     df.drop(columns=['BrainSegVolNotVent', 'eTIV'], inplace=True)
-#     return df
+    # rename ?h.aparc.modality column to participant
+    df.rename(columns=lambda col: 'participant' if 'aparc' in col else col, inplace=True)
+    df.drop(columns=['BrainSegVolNotVent', 'eTIV'], inplace=True)
+    return df
 
 
-# def load_freesurfer_aseg(file):
-#     '''
-#     Load aseg file created by FreeSurfer and combined with asegstats2table.
+def load_freesurfer_aseg(file):
+    '''
+    Load aseg file created by FreeSurfer and combined with asegstats2table.
     
-#     file: directory to the aseg file
-#     '''
-#     df = pd.read_csv(file, sep='\t')
+    file: directory to the aseg file
+    '''
+    df = pd.read_csv(file, sep='\t')
 
-#     # rename Measure:volume column to participant
-#     df.rename(columns=lambda col: 'participant' if 'Measure' in col else col, inplace=True)
-#     return df
+    # rename Measure:volume column to participant
+    df.rename(columns=lambda col: 'participant' if 'Measure' in col else col, inplace=True)
+    return df
 
 
 def calculate_scanner_difference(data, rois, scanner_var, covars):
