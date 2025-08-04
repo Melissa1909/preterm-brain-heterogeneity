@@ -9,7 +9,7 @@ from statsmodels.stats.multitest import multipletests
 
 import sys
 sys.path.append('../code/')
-from plotting import plot_individual_brain_maps, prepare_data_for_brain_plot
+from plotting import plot_individual_brain_maps, prepare_data_for_brain_plot, plot_brain_map
 
 
 def plot_longitudinal_data_subplots(df, rois, modality, out_dir_fig=os.getcwd(), filter_extranormal=False, fontsize=18, num_plots=34, num_cols=7, dataset='BLS'):
@@ -116,6 +116,46 @@ def compute_longitudinal_icc(df_pt, rois_cortical_centiles, outname):
     return icc_df
     
     
+# def plot_icc_distribution(icc_df, outname, fontsize=18):
+#     '''
+#     Plot the distribution of ICC values.
+    
+#     icc_df: DataFrame containing ICC results
+#     out_dir_fig: Output directory to save the figure
+#     fontsize: Font size for the plot
+#     '''
+#     plt.figure(figsize=(3, 2))
+#     # sns.kdeplot(icc_df['ICC'], fill=False, alpha=1, color='k', linewidth=1)
+#     sns.histplot(icc_df['ICC'], kde=True, bins=20, color='k', 
+#                 stat='count', edgecolor=None, linewidth=6, alpha=0.3)
+
+#     # plt.xlabel('ICC value', fontsize=fontsize)
+#     plt.xlabel('')
+#     plt.ylabel('')
+#     # plt.ylabel('Density', fontsize=fontsize)
+#     plt.tick_params(axis='both', width=0.5)
+    
+#     plt.xticks(fontsize=fontsize-2)
+#     plt.yticks(fontsize=fontsize-2)
+    
+#     sns.despine()
+#     plt.tight_layout()
+#     plt.savefig(outname)
+#     plt.show()
+
+
+def plot_icc_surf(icc_df, outname, brain_measure='SA', limits=(0.5, 1)):
+    # get ICC values
+    icc_df_val = icc_df['ICC'].to_numpy()
+    # insert 0 for entorhinal cortex if SA
+    if brain_measure == 'SA':
+        icc_df_val = np.insert(icc_df_val, 4, 0)  # insert nan for entorhinal
+    # duplicate values for left and right hemisphere
+    icc_dupl = np.tile(icc_df_val, (1,2)).squeeze()
+
+    # plot brain map
+    plot_brain_map(icc_dupl, outname, cmap='YlGn', limits=limits, scale=10, fill=0)
+
     
     
 # def plot_raw_longitudinal_data_subplots(df, rois, modality, out_dir_fig=os.getcwd()):
