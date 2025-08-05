@@ -60,21 +60,23 @@ def group_comparison(rois, dat, covariates=['sex', 'age_days']):
             # fit the model
             formula = f'{roi} ~ diagnosis + {" + ".join(covariates)}'
             model = ols(formula, data=dat).fit()
-            
+                        
             # extract the t-value and p-value for the diagnosis variable
             t_value = model.tvalues['diagnosis']
             p_value = model.pvalues['diagnosis']
+            dof = model.df_resid
+            ci_lower, ci_upper = model.conf_int(alpha=0.05).loc['diagnosis']
             
             # calculate Cohen's d
             d = calculate_cohens_d(dat, roi)
-            
-            results.append((roi, t_value, d, p_value))
+
+            results.append((roi, t_value, dof, d, ci_lower, ci_upper, p_value))
         else:
             # If the ROI is completely NaN, append NaN values
-            results.append((roi, np.nan, np.nan, np.nan))
+            results.append((roi, np.nan, np.nan, np.nan, np.nan, np.nan, np.nan))
 
     # convert the results list to a DataFrame
-    result_df = pd.DataFrame(results, columns=['ROI', 't_statistic', 'Cohen_d', 'p_value'])
+    result_df = pd.DataFrame(results, columns=['ROI', 't_statistic', 'dof', 'Cohen_d', 'ci_lower', 'ci_upper', 'p_value'])
 
     # correct for multiple comparisons
     p_values = result_df['p_value']
