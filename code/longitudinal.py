@@ -80,6 +80,52 @@ def plot_longitudinal_data_subplots(df, rois, modality, out_dir_fig=os.getcwd(),
     plt.show()
 
 
+
+def save_source_data_for_extranormal(df, rois, outname):
+    """
+    Save source data for extranormal participants.
+    
+    df: DataFrame containing data for two timepoints
+    rois: List of ROIs to include in the source data
+    outname: Output filename for the source data CSV
+    """
+    # Generate a new df
+    df_copy = df.copy()
+    for roi in rois:
+        df_copy[roi] = np.nan
+
+    # keep track of included participants (i.e. those with at least one extranormal value for that ROI)
+    included_participants = set()
+
+    for roi in rois:
+        if roi == 'centile_SA_entorhinal':  # skip as per plotting code
+            continue
+
+        # get mask of extranormal participants for this ROI
+        is_extranormal = df.groupby('participant')[roi].apply(lambda x: (x < 0.05).any() or (x > 0.95).any())
+        extranormal_ids = is_extranormal[is_extranormal].index.tolist()
+
+        # mark these participants as included
+        included_participants.update(extranormal_ids)
+
+        # fill values only for extranormal participants
+        for pid in extranormal_ids:
+            df_copy.loc[df_copy['participant'] == pid, roi] = df.loc[df['participant'] == pid, roi]
+
+    # filter to only included participants
+    df_filtered = df_copy[df_copy['participant'].isin(included_participants)].copy()
+
+    # #  anonymize participant IDs
+    # unique_ids = df_filtered['participant'].unique()
+    # id_map = {pid: f"sub-{i:03d}" for i, pid in enumerate(unique_ids, 1)}
+    # df_filtered['participant'] = df_filtered['participant'].map(id_map)
+
+    # save
+    df_filtered = df_filtered[['participant', 'timepoint'] + rois]  # keep only relevant columns
+    df_filtered.to_csv(outname, index=False)
+    print(f"Source data saved to {outname}")
+
+
 def compute_longitudinal_icc(df_pt, rois_cortical_centiles, outname):
     '''
     Compute ICC for longitudinal data.
@@ -154,7 +200,7 @@ def plot_icc_surf(icc_df, outname, brain_measure='SA', limits=(0.5, 1)):
     icc_dupl = np.tile(icc_df_val, (1,2)).squeeze()
 
     # plot brain map
-    plot_brain_map(icc_dupl, outname, cmap='YlGn', limits=limits, scale=10, fill=0)
+    plot_brain_map(icc_dupl, outname, cmap='YlOrBr', limits=limits, scale=10, fill=0)
 
     
     

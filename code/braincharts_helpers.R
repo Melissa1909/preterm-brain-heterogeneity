@@ -172,21 +172,50 @@ plot_pop_curves <- function(roi, sw_dir, out_dir, best_analysis_dir) {
     file_name <- paste0("pop_curve_", roi, "_", sex_label, ".tiff")
     ggsave(filename = file_name, plot = plot, device = "tiff", path = out_dir, width = 7, height = 7, dpi = 500, bg = "white")
   }
-  
+
   # Subset and plot data for females and males
   plot_and_save(
     data_sex = subset(CURVE.DF, sex == "Female"),
     roi = roi,
     term_data_best = subset(RESULT.BEST[["data"]], dx == "CN" & sex == "Female"),
-    data_preterm_fem_best <- subset(RESULT.BEST[["data"]], (is.na(dx) | dx != "CN") & sex == "Female"),
+    preterm_data_best <- subset(RESULT.BEST[["data"]], (is.na(dx) | dx != "CN") & sex == "Female"),
     sex_label = "fem"
   )
-  
+
+  term_data_best_male <- subset(RESULT.BEST[["data"]], dx == "CN" & sex == "Male")
+  preterm_data_best_male <- subset(RESULT.BEST[["data"]], (is.na(dx) | dx != "CN") & sex == "Male")
+  data_best_male <- subset(RESULT.BEST[["data"]], sex == "Male")
+
   plot_and_save(
     data_sex = subset(CURVE.DF, sex == "Male"),
     roi = roi,
-    term_data_best = subset(RESULT.BEST[["data"]], dx == "CN" & sex == "Male"),
-    preterm_data_best = subset(RESULT.BEST[["data"]], (is.na(dx) | dx != "CN") & sex == "Male"),
+    term_data_best = term_data_best_male,
+    preterm_data_best = preterm_data_best_male,
     sex_label = "male"
   )
+
+  # source data for plotting brain charts
+  CURVE.DF.PLOTTING <- subset(CURVE.DF, sex == "Male")
+  factor = 10000
+  # only scale the relevant columns (PRED.u975.pop, PRED.l025.pop, PRED.m500.pop)
+  CURVE.DF.PLOTTING <- CURVE.DF.PLOTTING %>%
+    select(AgeNormal, PRED.u975.pop, PRED.l025.pop, PRED.m500.pop) %>%
+    mutate(across(starts_with("PRED"), ~ . * factor)) %>%
+    rename(Age = AgeNormal,
+            predicted_u975 = PRED.u975.pop,
+            predicted_l025 = PRED.l025.pop,
+            predicted_m500 = PRED.m500.pop)
+
+  data_best_male_source <- data_best_male %>%
+    select(Age, r, sex, dx) %>%
+  mutate(dx = case_when(
+      is.na(dx) ~ "preterm",
+      TRUE ~ as.character(dx)
+    )) %>%
+    mutate(across(starts_with(r), ~ . * factor)) %>%
+    arrange(Age)
+
+
+  write.csv(CURVE.DF.PLOTTING, file = file.path(out_dir, paste0("source_pop_curve_", roi, ".csv")), row.names = FALSE)
+  write.csv(data_best_male_source, file = file.path(out_dir, paste0("source_pop_curve_best_", roi, ".csv")), row.names = FALSE)
 }

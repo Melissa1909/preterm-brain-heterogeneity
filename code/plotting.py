@@ -300,11 +300,16 @@ def plot_gene_exp(celltype, it_dir, out_dir, scale=1):
     scale: scale of the figure, default=1
     '''
     ge = pd.read_csv(join(it_dir, f'expression_{celltype}.csv'), delimiter=',', index_col=0)
+    # save source data
+    #ge.to_csv(join(out_dir, f'source_expression_{celltype}.csv'), index=False)
+    
+    # plotting
     ge = ge[celltype].values.flatten().astype(float)
     ### BUG in previous version; used np.tile
     
     outname = os.path.join(out_dir, f'{celltype}_expression.svg')
     plot_brain_map(ge, outname, cmap='YlOrRd', limits=(0.4, 0.7), scale=scale, fill=0.5)
+    
 
 
 def plot_pc_loadings(loadings, out_dir, brain_measure_name, ylim=(0, 0.25)):

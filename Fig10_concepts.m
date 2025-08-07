@@ -9,7 +9,8 @@
 
 
 clear; clc;
-sw_dir = '/code/Simple-Brain-Plot';  % adapt path to Simple-Brain-Plot
+working_dir = pwd;
+sw_dir = fullfile(working_dir, 'code', 'Simple-Brain-Plot');  % adapt path to Simple-Brain-Plot
 addpath(sw_dir);
 
 wd = pwd();
@@ -61,6 +62,7 @@ values(77) = 0.1; % superior temporal
 values(78) = 0.05; % supramarginal
 values(80) = 0.05; % temporal pole
 values(82) = 0.3; % insula
+writematrix(values, fullfile(outdir, 'source_group_diff_age_30w.txt'));
 
 outname = fullfile(outdir, 'group_diff_age_30w.svg');
 plotBrain(regionDescriptions.aparc_aseg, values, cm, 'atlas', 'aparc', ...
@@ -78,6 +80,7 @@ values(77) = 0.1; % superior temporal
 values(78) = 0.15; % supramarginal
 values(80) = 0.1; % temporal pole
 values(82) = 0.25; % insula
+writematrix(values, fullfile(outdir, 'source_group_diff_age_7y.txt'));
 
 outname = fullfile(outdir, 'group_diff_age_7y.svg');
 plotBrain(regionDescriptions.aparc_aseg, values, cm, 'atlas', 'aparc', ...
@@ -95,6 +98,7 @@ values(77) = 0.1; % superior temporal
 values(78) = 0.15; % supramarginal
 values(80) = 0.2; % temporal pole
 values(82) = 0.15; % insula
+writematrix(values, fullfile(outdir, 'source_group_diff_age_25y.txt'));
 
 outname = fullfile(outdir, 'group_diff_age_25y.svg');
 plotBrain(regionDescriptions.aparc_aseg, values, cm, 'atlas', 'aparc', ...
@@ -113,6 +117,7 @@ values(74) = 0.6; % rostral middle frontal
 values(66) = 0.7; % pars orbitalis
 values(58) = 0.3; % lateral occipital
 values(80) = 0.3; % temporal pole
+writematrix(values, fullfile(outdir, 'source_sub1_age_birth.txt'));
 
 outname = fullfile(outdir, 'sub1_age_birth.svg');
 plotBrain(regionDescriptions.aparc_aseg, values, cm, 'atlas', 'aparc', ...
@@ -129,6 +134,7 @@ values(74) = 0.6; % rostral middle frontal
 values(66) = 0.8; % pars orbitalis
 values(58) = 0.3; % lateral occipital
 values(80) = 0.5; % temporal pole
+writematrix(values, fullfile(outdir, 'source_sub1_age_7y.txt'));
 
 outname = fullfile(outdir, 'sub1_age_7y.svg');
 plotBrain(regionDescriptions.aparc_aseg, values, cm, 'atlas', 'aparc', ...
@@ -145,6 +151,7 @@ values(74) = 0.7; % rostral middle frontal
 values(66) = 0.9; % pars orbitalis
 values(58) = 0.5; % lateral occipital
 values(80) = 0.8; % temporal pole
+writematrix(values, fullfile(outdir, 'source_sub1_age_25y.txt'));
 
 outname = fullfile(outdir, 'sub1_age_25y.svg');
 plotBrain(regionDescriptions.aparc_aseg, values, cm, 'atlas', 'aparc', ...
@@ -159,7 +166,7 @@ values(65) = 0.7; % pars opercularis
 values(51) = 0.5; % caudal middle frontal
 values(56) = 0.9; % inferior temporal
 values(59) = 0.6; % lateral orbitofrontal
-
+writematrix(values, fullfile(outdir, 'source_sub2_age_birth.txt'));
 
 outname = fullfile(outdir, 'sub2_age_birth.svg');
 plotBrain(regionDescriptions.aparc_aseg, values, cm, 'atlas', 'aparc', ...
@@ -173,6 +180,7 @@ values(65) = 0.75; % pars opercularis
 values(51) = 0.5; % caudal middle frontal
 values(56) = 0.65; % inferior temporal
 values(59) = 0.7; % lateral orbitofrontal
+writematrix(values, fullfile(outdir, 'source_sub2_age_7y.txt'));
 
 
 outname = fullfile(outdir, 'sub2_age_7y.svg');
@@ -187,6 +195,7 @@ values(65) = 0.75; % pars opercularis
 values(51) = 0.45; % caudal middle frontal
 values(56) = 0.75; % inferior temporal
 values(59) = 0.7; % lateral orbitofrontal
+writematrix(values, fullfile(outdir, 'source_sub2_age_25y.txt'));
 
 
 outname = fullfile(outdir, 'sub2_age_25y.svg');
@@ -201,7 +210,7 @@ values(69) = 0.7; % postcentral
 values(77) = 0.3; % superior temporal
 values(81) = 0.5; % transverse temporal
 values(62) = 0.2; % middletemporal
-
+writematrix(values, fullfile(outdir, 'source_sub3_age_birth.txt'));
 
 outname = fullfile(outdir, 'sub3_age_birth.svg');
 plotBrain(regionDescriptions.aparc_aseg, values, cm, 'atlas', 'aparc', ...
@@ -213,6 +222,7 @@ values = zeros(size(regionDescriptions.aparc_aseg));
 values(69) = 0.6; % postcentral
 values(77) = 0.25; % superior temporal
 values(81) = 0.7; % transverse temporal
+writematrix(values, fullfile(outdir, 'source_sub3_age_7y.txt'));
 
 
 outname = fullfile(outdir, 'sub3_age_7y.svg');
@@ -225,6 +235,7 @@ values = zeros(size(regionDescriptions.aparc_aseg));
 values(69) = 0.6; % postcentral
 values(77) = 0.5; % superior temporal
 values(81) = 0.8; % transverse temporal
+writematrix(values, fullfile(outdir, 'source_sub3_age_25y.txt'));
 
 outname = fullfile(outdir, 'sub3_age_25y.svg');
 plotBrain(regionDescriptions.aparc_aseg, values, cm, 'atlas', 'aparc', ...
