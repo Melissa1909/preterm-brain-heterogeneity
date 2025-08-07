@@ -18,8 +18,10 @@ __pycache__/*
 # not shared due to data restrictions
 code/BrainCharts/*
 code/processv43/*
+code/Simple-Brain-Plot
 synthetic_data_generation.ipynb
 tmp_dhcp_release_comparison.ipynb
+Fig1.ipynb
 
 
 # TRANSIENT
@@ -28,4 +30,5 @@ outputs/consistency_microscale/*
 code/3_microscale*
 code/imaging_transcriptimics.py
 requirements.txt
+
 
