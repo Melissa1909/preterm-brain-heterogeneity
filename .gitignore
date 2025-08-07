@@ -22,6 +22,9 @@ code/Simple-Brain-Plot
 synthetic_data_generation.ipynb
 tmp_dhcp_release_comparison.ipynb
 Fig1.ipynb
+outputs/tmp/Fig*
+outputs/source_data/*
+outputs/consistency_microscale/all_correlations_cell_types.csv
 
 
 # TRANSIENT
