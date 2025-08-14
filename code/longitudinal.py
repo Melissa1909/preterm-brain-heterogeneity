@@ -143,51 +143,37 @@ def compute_longitudinal_icc(df_pt, rois_cortical_centiles, outname):
             continue
         
         # compute ICC
-        icc = pingouin.intraclass_corr(data=df_pt, targets='participant', raters='timepoint', ratings=region, nan_policy='omit')
+        icc = pingouin.intraclass_corr(
+            data=df_pt, 
+            targets='participant', 
+            raters='timepoint', 
+            ratings=region, 
+            nan_policy='omit')
         
         # Extract ICC(3,1): timepoint treated as fixed effect
-        icc_value = icc.loc[(icc['Type'] == 'ICC3') & (icc['CI95%'].notnull()), 'ICC'].values[0]
-        p_value = icc.loc[(icc['Type'] == 'ICC3') & (icc['CI95%'].notnull()), 'pval'].values[0]
-        
+        icc_row = icc.loc[(icc['Type'] == 'ICC3') & (icc['CI95%'].notnull())].iloc[0]
+        icc_value = icc_row['ICC']
+        p_value = icc_row['pval']
+        ci_lower, ci_upper = icc_row['CI95%']
+        df1 = icc_row['df1']
+        df2 = icc_row['df2']
+
         # store into dictionary
-        icc_results[region] = (icc_value, p_value)
-        
+        icc_results[region] = (icc_value, df1, df2, ci_lower, ci_upper, p_value)
+
     # Convert to df
-    icc_df = pd.DataFrame.from_dict(icc_results, orient='index', columns=['ICC', 'pvalue'])
+    icc_df = pd.DataFrame.from_dict(icc_results, orient='index', columns=['ICC', 'DOF1', 'DOF2', 'CI95%_lower', 'CI95%_upper', 'pvalue'])
     icc_df['p_fdr'] = multipletests(icc_df['pvalue'], method='fdr_bh')[1]
     
+    # format p-values in scientific notation x.xx × 10^-x
+    icc_df['ICC'] = icc_df['ICC'].apply(lambda x: f"{x:.3f}")
+    icc_df['pvalue'] = icc_df['pvalue'].apply(lambda p: f"{p:.2e}")
+    icc_df['p_fdr'] = icc_df['p_fdr'].apply(lambda p: f"{p:.2e}")
+
     # save to csv
     icc_df.to_csv(outname, index=True)
 
     return icc_df
-    
-    
-# def plot_icc_distribution(icc_df, outname, fontsize=18):
-#     '''
-#     Plot the distribution of ICC values.
-    
-#     icc_df: DataFrame containing ICC results
-#     out_dir_fig: Output directory to save the figure
-#     fontsize: Font size for the plot
-#     '''
-#     plt.figure(figsize=(3, 2))
-#     # sns.kdeplot(icc_df['ICC'], fill=False, alpha=1, color='k', linewidth=1)
-#     sns.histplot(icc_df['ICC'], kde=True, bins=20, color='k', 
-#                 stat='count', edgecolor=None, linewidth=6, alpha=0.3)
-
-#     # plt.xlabel('ICC value', fontsize=fontsize)
-#     plt.xlabel('')
-#     plt.ylabel('')
-#     # plt.ylabel('Density', fontsize=fontsize)
-#     plt.tick_params(axis='both', width=0.5)
-    
-#     plt.xticks(fontsize=fontsize-2)
-#     plt.yticks(fontsize=fontsize-2)
-    
-#     sns.despine()
-#     plt.tight_layout()
-#     plt.savefig(outname)
-#     plt.show()
 
 
 def plot_icc_surf(icc_df, outname, brain_measure='SA', limits=(0.5, 1)):
@@ -201,158 +187,3 @@ def plot_icc_surf(icc_df, outname, brain_measure='SA', limits=(0.5, 1)):
 
     # plot brain map
     plot_brain_map(icc_dupl, outname, cmap='YlOrBr', limits=limits, scale=10, fill=0)
-
-    
-    
-# def plot_raw_longitudinal_data_subplots(df, rois, modality, out_dir_fig=os.getcwd()):
-#     '''
-#     Plot longitudinal data for raw CT or SA in the rois list in individual subplots.
-    
-#     df: DataFrame containing data for two timepoints, centiles and raw CT
-#     rois: List of ROIs to plot (should be 34 in this case)
-#     modality: Modality of the data (e.g., CT)
-#     out_dir_fig: Output directory to save the figure
-#     '''
-#     # Define plot layout
-#     num_plots = 34
-#     num_cols = 7
-#     num_rows = (num_plots + num_cols - 1) // num_cols 
-
-#     fig, axes = plt.subplots(num_rows, num_cols, figsize=(25, num_rows*5))
-#     axes = axes.flatten()
-
-#     for i, (roi, ax) in enumerate(zip(rois, axes)):
-#         # Define centile column based on the ROI
-#         centile_column = 'centile_' + roi
-#         #centile_column = roi
-
-#         # Filter subjects with extranormal centile scores at any timepoint
-#         extranormal_subjects = df.groupby('participant').filter(
-#             lambda x: (x[centile_column] < 0.05).any() or (x[centile_column] > 0.95).any()
-#         )
-
-#         for sub in extranormal_subjects['participant'].unique():
-#             sub_data = extranormal_subjects[extranormal_subjects['participant'] == sub]
-            
-#             # Iterate through each timepoint for this subject
-#             for _, row in sub_data.iterrows():
-#                 timepoint = row['timepoint']
-#                 ct_value = row[roi]
-#                 centile_value = row[centile_column]
-
-#                 # Set color based on centile score
-#                 if centile_value < 0.05:
-#                     color = 'blue'
-#                 elif centile_value > 0.95:
-#                     color = 'red'
-#                 else:
-#                     color = 'k'  # default to black if not extranormal
-
-#                 # Plot raw CT value for this timepoint with appropriate color
-#                 ax.scatter(x=timepoint, y=ct_value, color=color, s=40, alpha=.8)
-
-#             # Connect the points with a line
-#             ax.plot(sub_data['timepoint'], sub_data[roi], alpha=.8, color='k')
-
-#         # Handle missing values (NaN) and only set y-limits if valid data exists
-#         if extranormal_subjects[roi].notna().any():
-#             ax.set_ylim(extranormal_subjects[roi].min() * 0.8, extranormal_subjects[roi].max() * 1.2)
-#         ax.grid(False)
-#         ax.set_xticks([1, 2])
-#         ax.tick_params(axis='both', which='major', labelsize=12)
-        
-
-#     # Remove unused subplots, if any
-#     for j in range(i + 1, len(axes)):
-#         fig.delaxes(axes[j])
-
-#     # Save the figure
-#     filename = f'{modality}_longitudinal_raw_extranormal.svg'
-#     plt.tight_layout()
-#     plt.savefig(os.path.join(out_dir_fig, filename))
-#     plt.show()
-
-
-
-# def split_timepoints(df, roi):  
-#     '''
-#     Split df into two dataframes based on the timepoint column and merge them on the participant column.
-#     df: dataframe containing data for two timepoints
-#     roi: the name of the ROI to split and merge
-#     '''
-#     # split the data by timepoints
-#     timepoint1 = df[df['timepoint'] == 1][['participant', roi]]
-#     timepoint2 = df[df['timepoint'] == 2][['participant', roi]]
-
-#     # Merge the data on 'participant' to compare the same person's values at both timepoints
-#     merged = pd.merge(timepoint1, timepoint2, on='participant', suffixes=('_t1', '_t2'))
-#     return merged
-    
-
-
-# def count_deviations_staying_extra(df, rois):
-#     '''
-#     Count the number of subjects that have infra- or supranormal values at both timepoints.
-#     df: dataframe containing data for two timepoints
-#     rois: list of ROIs to analyze
-#     '''
-#     result = []
-#     for roi in rois:
-#         merged = split_timepoints(df, roi)
-#         # Apply conditions for infra and supra significant deviations
-#         significant_t1_infra = merged[f'{roi}_t1'] < 0.05
-#         significant_t1_supra = merged[f'{roi}_t1'] > 0.95
-#         significant_t2_infra = merged[f'{roi}_t2'] < 0.05
-#         significant_t2_supra = merged[f'{roi}_t2'] > 0.95
-#         # Count how many subjects meet the conditions
-#         count_infra_both = (significant_t1_infra & significant_t2_infra).sum()
-#         count_supra_both = (significant_t1_supra & significant_t2_supra).sum()
-        
-#         # Calculate percentages
-#         pct_infra_both = 100 if count_infra_both == 0 and significant_t1_infra.sum() == 0 else (count_infra_both / significant_t1_infra.sum()) * 100
-#         pct_supra_both = 100 if count_supra_both == 0 and significant_t1_supra.sum() == 0 else (count_supra_both / significant_t1_supra.sum()) * 100
-        
-#         row = {
-#             'ROI': roi,
-#             'n_infra_t1': significant_t1_infra.sum(),
-#             'n_supra_t1': significant_t1_supra.sum(),
-#             'n_infra_t2': significant_t2_infra.sum(),
-#             'n_supra_t2': significant_t2_supra.sum(),
-#             'n_both_infra': count_infra_both,
-#             'n_both_supra': count_supra_both,
-#             'pct_infra_both': pct_infra_both,
-#             'pct_supra_both': pct_supra_both
-#         }
-#         result.append(row)
-    
-#     return pd.DataFrame(result)
-
-
-# def plot_longitudinal_brain_maps(sub_id, measure, df, outdir_time_1, outdir_time_2):
-#     '''
-#     Plot individual brain maps showing centile scores for two timepoints.
-
-#     sub_id: subject id, e.g., BEST-BN-001
-#     measure: measure to be plotted, e.g., CT
-#     df: dataframe containing data for two timepoints
-#     outdir_time_1: directory where figures for timepoint 1 should be saved to
-#     outdir_time_2: directory where figures for timepoint 2 should be saved to
-#     '''
-#     # create output directories if they do not exist
-#     os.makedirs(outdir_time_1, exist_ok=True)
-#     os.makedirs(outdir_time_2, exist_ok=True)
-
-#     # filter for sub_id
-#     #df = df[df['participant'] == sub_id]
-
-#     # plot individual brain maps for each timepoint
-#     print(f'Plotting individual brain maps for subject {sub_id} timepoint 1...')
-#     data_time_1 = df[df['timepoint'] == 1]
-#     plot_individual_brain_maps(data_time_1, sub_id, outdir_time_1, scale=10, cmap='RdBu_r', limits=(0, 1), infra_supra=True, measure=measure)
-    
-#     print(f'Plotting individual brain maps for subject {sub_id} timepoint 2...')
-#     data_time_2 = df[df['timepoint'] == 2]
-#     plot_individual_brain_maps(data_time_2, sub_id, outdir_time_2, scale=10, cmap='RdBu_r', limits=(0, 1), infra_supra=True, measure=measure)
-
-
-

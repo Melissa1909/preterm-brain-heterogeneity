@@ -25,7 +25,7 @@ Fig1.ipynb
 outputs/tmp/Fig*
 outputs/source_data/*
 outputs/consistency_microscale/all_correlations_cell_types.csv
-
+best_meeting_percentages.ipynb
 
 # TRANSIENT
 outputs/consistency_microscale_old

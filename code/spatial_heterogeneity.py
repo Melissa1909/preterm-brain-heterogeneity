@@ -39,6 +39,7 @@ def calculate_cohens_d(data, roi):
     
     return cohen_d
 
+
 def group_comparison(rois, dat, covariates=['sex', 'age_days']):
     '''
     Perform a group comparison for each roi in rois using a linear model with the diagnosis as the predictor and the covariates as confounders.
@@ -90,45 +91,6 @@ def group_comparison(rois, dat, covariates=['sex', 'age_days']):
     return result_df
 
 
-# def group_comparison(rois, dat, covariates=['sex', 'age_days']):
-#     '''
-#     Perform a group comparison for each roi in rois using a linear model with the diagnosis as the predictor and the covariates as confounders.
-#     Will also perform multiple comparisons correction using the Benjamini-Hochberg method.
-
-#     rois: list of ROIs to perform the group comparison
-#     dat: DataFrame containing the data
-#     covariates: list of covariates to include in the model
-#     '''
-#     # Initialize an empty list to store the results
-#     results = []
-
-#     for roi in rois:
-#         # add binary variable for diagnosis
-#         dat['diagnosis'] = dat['dx'].map({'preterm': 1, 'CN': 0})
-
-#         # fit the model
-#         formula = f'{roi} ~ diagnosis + {" + ".join(covariates)}'
-#         model = ols(formula, data=dat).fit()
-        
-#         # extract the t-value and p-value for the diagnosis variable
-#         t_value = model.tvalues['diagnosis']
-#         p_value = model.pvalues['diagnosis']
-        
-#         # calculate Cohen's d
-#         d = calculate_cohens_d(dat, roi)
-        
-#         results.append((roi, t_value, d, p_value))
-
-#     # convert the results list to a DataFrame
-#     result_df = pd.DataFrame(results, columns=['ROI', 't_statistic', 'Cohen_d', 'p_value'])
-
-#     # correct for multiple comparisons
-#     _, p_fdr, _, _ = multipletests(result_df['p_value'], method='fdr_bh')
-#     result_df['p_fdr'] = p_fdr
-
-#     return result_df
-
-
 def get_centile_scores_per_subject(analysis_dir, rois, base_file='result_deviation_CT_bankssts.csv'):
     '''
     Load centile scores for each ROI computed in the braincharts framework.
@@ -167,7 +129,6 @@ def get_centile_scores_per_subject(analysis_dir, rois, base_file='result_deviati
         except Exception as e:
             print(f"Error reading or processing {roi_file}: {e}")
             continue
-
 
     # Convert the array to a DataFrame
     cent_df = pd.DataFrame(centile_scores, columns=[f'centile_{roi}' for roi in rois])
@@ -248,7 +209,7 @@ def binarize_extranormal(data):
     return data_bin
 
 
-def plot_binarized_extranormal(data_bin, title, outname, bin=True):
+def plot_binarized_extranormal(data_bin, title, outname, bin=True, fsize=10):
     '''
     Plot the binarized extranormal deviations.
     
@@ -260,16 +221,16 @@ def plot_binarized_extranormal(data_bin, title, outname, bin=True):
     if bin:
         fig = plt.figure(figsize=(2.5, 4))
         heatmap = sns.heatmap(data_bin, cmap=['white','k'], cbar=False, figure=fig)
-        plt.xlabel('ROIs', fontsize=10)
-        plt.ylabel('Subject-IDs', fontsize=10)
-        
+        plt.xlabel('ROIs', fontsize=fsize)
+        plt.ylabel('Subject-IDs', fontsize=fsize)
+
     else:  # for supplementary figure
         fig = plt.figure(figsize=(5, 2.5))
         heatmap = sns.heatmap(data_bin.T, cmap='RdBu_r', center=0.5, cbar=True, 
                                 cbar_kws={'label': 'Deviation score'}, figure=fig)
-        heatmap.collections[0].colorbar.ax.yaxis.label.set_size(10)   
-        plt.xlabel('Subject-IDs', fontsize=10)
-        plt.ylabel('ROIs', fontsize=10)     
+        heatmap.collections[0].colorbar.ax.yaxis.label.set_size(fsize-2)   
+        plt.xlabel('Subject-IDs', fontsize=fsize)
+        plt.ylabel('ROIs', fontsize=fsize)     
         
     plt.title(title)
     heatmap.set_xticklabels('')
@@ -305,7 +266,10 @@ def plot_correlation_matrix_kde(corr_matrix, outname, fsize=12, across='subjects
     row_means = np.mean(corr_matrix, axis=1)  # average correlation per subject with all others
     sns.kdeplot(row_means, ax=ax_kde, vertical=True, fill=False, color='k')
     ax_kde.set_xlabel('Density', fontsize=fsize)
+    ax_kde.tick_params(axis='x', labelsize=fsize-3)
+    ax_kde.tick_params(axis='y', labelsize=fsize-3)
     ax_kde.set_ylim(-1, 1)
+    ax_kde.set_xticks(np.linspace(0,10, 3))
     
     
     if across == 'subjects':
@@ -324,9 +288,9 @@ def plot_correlation_matrix_kde(corr_matrix, outname, fsize=12, across='subjects
     plt.tight_layout()
     plt.savefig(outname, dpi=300)
     plt.show()
-    
-    
-def plot_mean_rho(corr_matrix, title, outname):
+
+
+def plot_mean_rho(corr_matrix, title, outname, fsize=12):
     '''
     Plot the distribution of mean Spearman rho.
     
@@ -336,7 +300,6 @@ def plot_mean_rho(corr_matrix, title, outname):
     '''
     row_means = corr_matrix.mean(axis=1)
     
-    fsize=12
     sns.set_style('whitegrid')
     plt.figure(figsize=(5,2))
     
@@ -348,6 +311,7 @@ def plot_mean_rho(corr_matrix, title, outname):
     plt.ylabel('Density', fontsize=fsize)
     plt.xticks(fontsize=fsize-2)
     plt.yticks(fontsize=fsize-2)
+    plt.gca().set_yticks(np.linspace(0,15, 4))
 
     plt.tight_layout()
     plt.savefig(outname, dpi=300)

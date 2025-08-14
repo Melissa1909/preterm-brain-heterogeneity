@@ -128,7 +128,6 @@ def cell_correlation(mean_expression, cortical_data, n_rot=1000, p_method='spin'
         else:
             raise ValueError("p_method must be 'spin', 'burt', or 'none'")
         
-        
         # store output
         corr_coeffs[s,0] = r
         corr_coeffs[s,1] = p

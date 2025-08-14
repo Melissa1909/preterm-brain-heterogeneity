@@ -74,7 +74,7 @@ def plot_brain_map(data, outname, cmap='RdBu_r', limits=(-5,5), scale=1, fill=0)
 
 
 def plot_group_difference_global(data, x='dx', y='WMV', covars=['age_days', 'sex'], yaxis_label = f'WMV [mm$^3$]', 
-                                    outname='group_difference_WMV.svg'):
+                                    outname='group_difference_WMV.svg', fsize=12):
     '''
     Plot violin plot of global measures (e.g. WMV, GMV, mean CT) adjusted for age and sex for term and preterm groups.
 
@@ -95,15 +95,16 @@ def plot_group_difference_global(data, x='dx', y='WMV', covars=['age_days', 'sex
     ax = sns.violinplot(data=data, x=x, y=f'adjusted_{y}', order=order, palette=['royalblue', 'darkorange'], 
                         fill=True, inner='box', linewidth=0.5)
     ax.set_xlabel('')
-    ax.set_xticklabels(['Term', 'Preterm'])
-    ax.set_ylabel(yaxis_label)
+    ax.set_xticklabels(['Full-term', 'Preterm'], fontsize=fsize-2)
+    ax.set_ylabel(yaxis_label, fontsize=fsize)
+    ax.set_yticklabels(ax.get_yticklabels(), fontsize=fsize-2)
     ax.yaxis.set_major_formatter(ScalarFormatter(useOffset=False))
     sns.despine()
 
     # add significance annotations
     pairs=[('CN', 'preterm')]
     annotator = Annotator(ax, pairs, data=data, x=x, y=f'adjusted_{y}', order=order)
-    annotator.configure(test='t-test_ind', text_format='star', loc='inside', comparisons_correction='fdr_bh', line_width=0.5)
+    annotator.configure(test='t-test_ind', text_format='star', loc='inside', comparisons_correction='fdr_bh', line_width=0.5, fontsize=fsize-2)
     annotator.apply_and_annotate()
 
     # save figure
@@ -177,6 +178,18 @@ def correlation_plot(x, y, data, color, xlabel, ylabel, outname, one_sided=False
     if one_sided == True:
         p = p/2
 
+    # DOF and CI
+    n = len(data[x])
+    dof = n - 2
+    
+    z = np.arctanh(r)  # Fisher transformation
+    se = 1/np.sqrt(n-3)  # standard error
+    delta = 1.96 * se
+    ci_lower = np.tanh(z - delta)  # convert back to r scale
+    ci_upper = np.tanh(z + delta)  # convert back to r scale
+
+    print(f'Correlation between {x} and {y}: r={r:.3f} with DOF={dof}, p={p:.3f}, CI=({ci_lower:.3f}, {ci_upper:.3f})')
+
     # plotting
     matplotlib.rcParams['grid.linewidth'] = 6
     cm = 1/2.54
@@ -220,7 +233,7 @@ def correlation_plot(x, y, data, color, xlabel, ylabel, outname, one_sided=False
         return p
     
     
-def plot_percentage_outside_norm_groups(rois, ft_scores_df, pt_scores_df, age_thr_lower, age_thr_upper, outname, add_legend=False, xlims=(0, 60)):
+def plot_percentage_outside_norm_groups(rois, ft_scores_df, pt_scores_df, age_thr_lower, age_thr_upper, outname, add_legend=False, xlims=(0, 60), fsize=8):
     '''
     Plot the percentage outside the normal range (i.e., <5th or >95th percentile) for each ROI.
 
@@ -236,18 +249,15 @@ def plot_percentage_outside_norm_groups(rois, ft_scores_df, pt_scores_df, age_th
     rois_cent = ['centile_' + roi for roi in rois]
     infra_supra_all = calc_infra_supra_percentage(rois_cent, ft_scores_df, pt_scores_df)
 
-    fsize=8
+    fsize=fsize
     ax = infra_supra_all.plot(x='rois', y=['infranormal_ft','supranormal_ft','infranormal_pt','supranormal_pt'], kind="barh", rot=0,
                                 figsize=(3,12),fontsize=fsize,color=['dimgray','lightgray', 'mediumblue', 'red'],
                                 legend=False, width=0.75)
     # label settings
     ax.invert_yaxis()  # labels read top-to-bottom
-    ax.set_xlabel('Subjects with extranormal deviation [%]',fontsize=fsize+2)
+    ax.set_xlabel('Subjects with deviations [%]',fontsize=fsize+2)
     ax.set_ylabel('')
-    if rois[0].startswith('CT_'):
-        rois_cortical_names = ['CTh ' + roi.split('_')[1] for roi in rois]
-    else:
-        rois_cortical_names = ['SA ' + roi.split('_')[1] for roi in rois]
+    rois_cortical_names = [roi.split('_')[1] for roi in rois]
     ax.set_yticklabels(rois_cortical_names)
         
     # set the x-axis limit    
@@ -300,12 +310,9 @@ def plot_gene_exp(celltype, it_dir, out_dir, scale=1):
     scale: scale of the figure, default=1
     '''
     ge = pd.read_csv(join(it_dir, f'expression_{celltype}.csv'), delimiter=',', index_col=0)
-    # save source data
-    #ge.to_csv(join(out_dir, f'source_expression_{celltype}.csv'), index=False)
     
     # plotting
     ge = ge[celltype].values.flatten().astype(float)
-    ### BUG in previous version; used np.tile
     
     outname = os.path.join(out_dir, f'{celltype}_expression.svg')
     plot_brain_map(ge, outname, cmap='YlOrRd', limits=(0.4, 0.7), scale=scale, fill=0.5)
@@ -353,12 +360,14 @@ def plot_rutherford_results(x, y1, y2, idp_order, color_theme, title, outname):
     df = df.iloc[::-1].reset_index(drop=True)
     
     # Plotting
-    fig, ax = plt.subplots(figsize=(6, 16), dpi=50)
+    fig, ax = plt.subplots(figsize=(5, 12), dpi=300)
 
     df[['Supranormal deviation', 'Infranormal deviation']].plot(
         kind='barh',
         ax=ax,
-        color=color_theme
+        color=color_theme,
+        fontsize=14,
+        width=0.8,
     )
     
     ax.set_title(title)
@@ -366,7 +375,7 @@ def plot_rutherford_results(x, y1, y2, idp_order, color_theme, title, outname):
     yticks = [i.split('_')[1] + ' ' + i.split('_')[2] for i in df['ROI']]
     ax.set_yticklabels(yticks)
     
-    ax.set_xlabel('Subjects with extranormal deviations [%]')
+    ax.set_xlabel('Subjects with extranormal deviations [%]', fontsize=14)
     ax.set_xlim(0, 27)
     ax.legend('')
     
