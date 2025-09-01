@@ -6,7 +6,7 @@
   <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
    <cc:Work>
     <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
-    <dc:date>2025-08-14T15:42:35.246547</dc:date>
+    <dc:date>2025-09-01T12:43:01.754670</dc:date>
     <dc:format>image/svg+xml</dc:format>
     <dc:creator>
      <cc:Agent>
@@ -910,9 +910,9 @@ z
     <path d="M 74.124545 55.950823 
 L 168.518485 50.530339 
 L 402.615455 37.083636 
-" clip-path="url(#pad1980d030)" style="fill: none; stroke: #6b8e23; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#pdfc4ce78ec)" style="fill: none; stroke: #6b8e23; stroke-width: 1.5; stroke-linecap: round"/>
     <defs>
-     <path id="m4ea7c1a078" d="M 0 3 
+     <path id="m4cfa52f838" d="M 0 3 
 C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
 C 2.683901 1.55874 3 0.795609 3 0 
 C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
@@ -924,19 +924,19 @@ C -1.55874 2.683901 -0.795609 3 0 3
 z
 " style="stroke: #6b8e23"/>
     </defs>
-    <g clip-path="url(#pad1980d030)">
-     <use xlink:href="#m4ea7c1a078" x="74.124545" y="55.950823" style="fill: #6b8e23; stroke: #6b8e23"/>
-     <use xlink:href="#m4ea7c1a078" x="168.518485" y="50.530339" style="fill: #6b8e23; stroke: #6b8e23"/>
-     <use xlink:href="#m4ea7c1a078" x="402.615455" y="37.083636" style="fill: #6b8e23; stroke: #6b8e23"/>
+    <g clip-path="url(#pdfc4ce78ec)">
+     <use xlink:href="#m4cfa52f838" x="74.124545" y="55.950823" style="fill: #6b8e23; stroke: #6b8e23"/>
+     <use xlink:href="#m4cfa52f838" x="168.518485" y="50.530339" style="fill: #6b8e23; stroke: #6b8e23"/>
+     <use xlink:href="#m4cfa52f838" x="402.615455" y="37.083636" style="fill: #6b8e23; stroke: #6b8e23"/>
     </g>
    </g>
    <g id="line2d_2">
     <path d="M 74.124545 126.946626 
 L 168.518485 107.076162 
 L 402.615455 57.790165 
-" clip-path="url(#pad1980d030)" style="fill: none; stroke: #ffd700; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#pdfc4ce78ec)" style="fill: none; stroke: #ffd700; stroke-width: 1.5; stroke-linecap: round"/>
     <defs>
-     <path id="m8bfa2fa4fa" d="M 0 3 
+     <path id="m5bb16218f0" d="M 0 3 
 C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
 C 2.683901 1.55874 3 0.795609 3 0 
 C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
@@ -948,19 +948,19 @@ C -1.55874 2.683901 -0.795609 3 0 3
 z
 " style="stroke: #ffd700"/>
     </defs>
-    <g clip-path="url(#pad1980d030)">
-     <use xlink:href="#m8bfa2fa4fa" x="74.124545" y="126.946626" style="fill: #ffd700; stroke: #ffd700"/>
-     <use xlink:href="#m8bfa2fa4fa" x="168.518485" y="107.076162" style="fill: #ffd700; stroke: #ffd700"/>
-     <use xlink:href="#m8bfa2fa4fa" x="402.615455" y="57.790165" style="fill: #ffd700; stroke: #ffd700"/>
+    <g clip-path="url(#pdfc4ce78ec)">
+     <use xlink:href="#m5bb16218f0" x="74.124545" y="126.946626" style="fill: #ffd700; stroke: #ffd700"/>
+     <use xlink:href="#m5bb16218f0" x="168.518485" y="107.076162" style="fill: #ffd700; stroke: #ffd700"/>
+     <use xlink:href="#m5bb16218f0" x="402.615455" y="57.790165" style="fill: #ffd700; stroke: #ffd700"/>
     </g>
    </g>
    <g id="line2d_3">
     <path d="M 74.124545 197.956364 
 L 168.518485 163.621985 
 L 402.615455 78.482759 
-" clip-path="url(#pad1980d030)" style="fill: none; stroke: #b22222; stroke-width: 1.5; stroke-linecap: round"/>
+" clip-path="url(#pdfc4ce78ec)" style="fill: none; stroke: #b22222; stroke-width: 1.5; stroke-linecap: round"/>
     <defs>
-     <path id="m8b47c2331f" d="M 0 3 
+     <path id="m4b34d7b083" d="M 0 3 
 C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
 C 2.683901 1.55874 3 0.795609 3 0 
 C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
@@ -972,10 +972,10 @@ C -1.55874 2.683901 -0.795609 3 0 3
 z
 " style="stroke: #b22222"/>
     </defs>
-    <g clip-path="url(#pad1980d030)">
-     <use xlink:href="#m8b47c2331f" x="74.124545" y="197.956364" style="fill: #b22222; stroke: #b22222"/>
-     <use xlink:href="#m8b47c2331f" x="168.518485" y="163.621985" style="fill: #b22222; stroke: #b22222"/>
-     <use xlink:href="#m8b47c2331f" x="402.615455" y="78.482759" style="fill: #b22222; stroke: #b22222"/>
+    <g clip-path="url(#pdfc4ce78ec)">
+     <use xlink:href="#m4b34d7b083" x="74.124545" y="197.956364" style="fill: #b22222; stroke: #b22222"/>
+     <use xlink:href="#m4b34d7b083" x="168.518485" y="163.621985" style="fill: #b22222; stroke: #b22222"/>
+     <use xlink:href="#m4b34d7b083" x="402.615455" y="78.482759" style="fill: #b22222; stroke: #b22222"/>
     </g>
    </g>
    <g id="patch_3">
@@ -1284,7 +1284,7 @@ L 337.534375 145.946562
 L 351.534375 145.946562 
 " style="fill: none; stroke: #6b8e23; stroke-width: 1.5; stroke-linecap: round"/>
      <g>
-      <use xlink:href="#m4ea7c1a078" x="337.534375" y="145.946562" style="fill: #6b8e23; stroke: #6b8e23"/>
+      <use xlink:href="#m4cfa52f838" x="337.534375" y="145.946562" style="fill: #6b8e23; stroke: #6b8e23"/>
      </g>
     </g>
     <g id="text_19">
@@ -1302,7 +1302,7 @@ L 337.534375 165.914062
 L 351.534375 165.914062 
 " style="fill: none; stroke: #ffd700; stroke-width: 1.5; stroke-linecap: round"/>
      <g>
-      <use xlink:href="#m8bfa2fa4fa" x="337.534375" y="165.914062" style="fill: #ffd700; stroke: #ffd700"/>
+      <use xlink:href="#m5bb16218f0" x="337.534375" y="165.914062" style="fill: #ffd700; stroke: #ffd700"/>
      </g>
     </g>
     <g id="text_20">
@@ -1355,7 +1355,7 @@ L 337.534375 185.7175
 L 351.534375 185.7175 
 " style="fill: none; stroke: #b22222; stroke-width: 1.5; stroke-linecap: round"/>
      <g>
-      <use xlink:href="#m8b47c2331f" x="337.534375" y="185.7175" style="fill: #b22222; stroke: #b22222"/>
+      <use xlink:href="#m4b34d7b083" x="337.534375" y="185.7175" style="fill: #b22222; stroke: #b22222"/>
      </g>
     </g>
     <g id="text_21">
@@ -1370,7 +1370,7 @@ L 351.534375 185.7175
   </g>
  </g>
  <defs>
-  <clipPath id="pad1980d030">
+  <clipPath id="pdfc4ce78ec">
    <rect x="57.7" y="29.04" width="361.34" height="176.96"/>
   </clipPath>
  </defs>
