@@ -149,10 +149,21 @@ def get_amount_infra_supra(cent_scores, infra_thr = 0.05, supra_thr = 0.95):
     infra_thr: float, threshold for infranormal values, default: 0.05
     supra_thr: float, threshold for supranormal values, default: 0.95
     '''
-    cent_scores['amount_infranormal'] = (cent_scores < infra_thr).sum(axis=1)
-    cent_scores['amount_supranormal'] = (cent_scores > supra_thr).sum(axis=1)
+def get_amount_infra_supra(cent_scores, infra_thr = 0.05, supra_thr = 0.95):
+    '''
+    Count infranormal and supranormal per subject.
+
+    cent_scores: dataframe with centile scores for each ROI
+    infra_thr: float, threshold for infranormal values, default: 0.05
+    supra_thr: float, threshold for supranormal values, default: 0.95
+    '''
+    centile_cols = [col for col in cent_scores.columns if col.startswith('centile_')]
+
+    cent_scores['amount_infranormal'] = (cent_scores[centile_cols] < infra_thr).sum(axis=1)
+    cent_scores['amount_supranormal'] = (cent_scores[centile_cols] > supra_thr).sum(axis=1)
     cent_scores.reset_index(inplace=True)
     return cent_scores
+
 
 
 def percent_extranormal(df):
