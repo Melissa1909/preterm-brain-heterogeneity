@@ -5,7 +5,6 @@ This repository accompanies the paper:
 Melissa Thalhammer, Jakob Seidlitz, Antonia Neubauer, Aurore Menegaux, Benita Schmitz-Koep, Maria A. Di Biase, Julia Schulz, Lena Dorfschmidt, Richard A. I. Bethlehem, Aaron Alexander-Bloch, Chris Adamson, Gareth Ball, Joana Sa de Almeida, Richard Beare, Claus Zimmer, Marcel Daamen, Henning Boecker, Peter Bartmann, Dieter Wolke, Dennis M. Hedderich, and Christian Sorg (2024). *Heterogeneous, temporally consistent, and plastic brain development after preterm birth.*
 
 [![Nature Communications DOI](https://img.shields.io/static/v1?label=Nature%20Communications&message=doi%3A10.1038%2Fs41467-025-63967-1&color=E63323&style=flat-square)](https://doi.org/10.1038/s41467-025-63967-1)
-[![DOI](https://zenodo.org/badge/890453758.svg)](https://doi.org/10.5281/zenodo.16875919)
 [![biorxiv](https://img.shields.io/badge/biorxiv-10.1101%2F2024.12.06.627134-blue?style=flat)](https://doi.org/10.1101/2024.12.06.627134)
 
 
