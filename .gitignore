@@ -26,6 +26,7 @@ outputs/tmp/Fig*
 outputs/source_data/*
 outputs/consistency_microscale/all_correlations_cell_types.csv
 best_meeting_percentages.ipynb
+outputs/supplement/rutherford/braincharts
 
 # TRANSIENT
 outputs/consistency_microscale_old
@@ -33,5 +34,8 @@ outputs/consistency_microscale/*
 code/3_microscale*
 code/imaging_transcriptimics.py
 requirements.txt
+
+# CENTILEBRAIN
+centileBrain
 
 
