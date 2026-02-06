@@ -126,9 +126,9 @@ plot_pop_curve_plotting <- function(dat, term_data_best, preterm_data_best, r, r
   label_size <- 14
   
   ggplot(dat, aes(x = AgeNormal)) +
-    geom_line(aes(y = factor * PRED.u975.pop), color = "azure4") +
-    geom_line(aes(y = factor * PRED.l025.pop), color = "azure4") +
-    geom_line(aes(y = factor * PRED.m500.pop), color = "black") +
+    geom_line(aes(y = factor * PRED.u975.pop), color = "azure4", linewidth=2) +
+    geom_line(aes(y = factor * PRED.l025.pop), color = "azure4",linewidth=2) +
+    geom_line(aes(y = factor * PRED.m500.pop), color = "black",linewidth=2) +
       
     geom_point(data = term_data_best, aes(x = Age, y = factor * term_data_best[[r]]), pch = 19, cex = 0.5, color = "black") +
     geom_point(data = preterm_data_best, aes(x = Age, y = factor * preterm_data_best[[r]]), pch = 19, cex = 0.5, color = "red") +
