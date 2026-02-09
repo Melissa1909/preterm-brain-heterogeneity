@@ -314,8 +314,8 @@ def plot_gene_exp(celltype, it_dir, out_dir, scale=1):
     # plotting
     ge = ge[celltype].values.flatten().astype(float)
     
-    outname = os.path.join(out_dir, f'{celltype}_expression.svg')
-    plot_brain_map(ge, outname, cmap='YlOrRd', limits=(0.4, 0.7), scale=scale, fill=0.5)
+    outname = os.path.join(out_dir, f'{celltype}_expression.png')
+    plot_brain_map(ge, outname, cmap='YlOrRd', limits=(0.5, 0.55), scale=scale, fill=0.5)
     
 
 
