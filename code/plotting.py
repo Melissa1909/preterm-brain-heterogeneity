@@ -148,14 +148,14 @@ def plot_individual_brain_maps(cortical_data, sub_id, outdir, scale=1, cmap='YlO
     # convert rCTD to numpy and filter necessary data
     cortical_data_sub = prepare_data_for_brain_plot(cortical_data, sub_id, filter_attribute=f'centile_{brain_measure}')
 
-    plot_brain_map(cortical_data_sub, outname=os.path.join(outdir, f'{sub_id}_{brain_measure}_individual_centiles.svg'), 
+    plot_brain_map(cortical_data_sub, outname=os.path.join(outdir, f'{sub_id}_{brain_measure}_individual_centiles.png'), 
                     cmap=cmap, limits=limits, scale=scale, fill=0.5)
     print(f'Plotted individual rCTD map for subject {sub_id} and saved it to {outdir}')
     
     if infra_supra == True:
         # plot infra/supra values only
         sig_deviations = np.where(cortical_data_sub < 0.05, -1, np.where(cortical_data_sub > 0.95, 1, 0))
-        outname_is = os.path.join(outdir, f'{sub_id}_{brain_measure}_individual_centiles_extranormal.svg')
+        outname_is = os.path.join(outdir, f'{sub_id}_{brain_measure}_individual_centiles_extranormal.png')
 
         plot_brain_map(sig_deviations, outname=outname_is, 
                     cmap='RdBu_r', limits=(-1,1), scale=scale, fill=0)
