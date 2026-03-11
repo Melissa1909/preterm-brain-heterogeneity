@@ -12,6 +12,7 @@ from statsmodels.formula.api import ols
 
 import matplotlib
 import matplotlib.pyplot as plt
+import matplotlib.colors as mcolors
 from matplotlib.ticker import ScalarFormatter,FuncFormatter
 import seaborn as sns
 from statannotations.Annotator import Annotator
@@ -159,7 +160,7 @@ def plot_individual_brain_maps(cortical_data, sub_id, outdir, scale=1, cmap='YlO
 
         plot_brain_map(sig_deviations, outname=outname_is, 
                     cmap='RdBu_r', limits=(-1,1), scale=scale, fill=0)
-    
+
 
 def correlation_plot(x, y, data, color, xlabel, ylabel, outname, one_sided=False, return_p=False):
     '''
@@ -193,10 +194,10 @@ def correlation_plot(x, y, data, color, xlabel, ylabel, outname, one_sided=False
     # plotting
     matplotlib.rcParams['grid.linewidth'] = 6
     cm = 1/2.54
-    fig = plt.figure(figsize=(5.5*cm,4*cm), dpi=150)
+    fig = plt.figure(figsize=(5.5*cm,4*cm), dpi=300)
     
     plot = sns.regplot(x=data[x], y=data[y], color=color, n_boot=10000, 
-                        scatter_kws={'s': 3, 'edgecolor': 'None'}, truncate=True, line_kws={'linewidth': 0.75})
+                        scatter_kws={'s': 8, 'edgecolor': 'None'}, truncate=True, line_kws={'linewidth': 1.5})
     
     # add correlation coefficient and p-value
     textstr = '\n'.join((
@@ -211,6 +212,100 @@ def correlation_plot(x, y, data, color, xlabel, ylabel, outname, one_sided=False
             r'$r=%.3f$' % (r),
             r'$p<0.001$'))
     props = dict(boxstyle='round', facecolor='silver', alpha=0.4, edgecolor='silver')
+    plot.text(0.03, 0.98, textstr, transform=plot.transAxes, fontsize=5, verticalalignment='top', bbox=props)
+
+    # label settings
+    plt.xlabel(xlabel, fontsize=6)
+    plt.xticks(fontsize=5)
+    plt.ylabel(ylabel, fontsize=6)
+    plt.yticks(fontsize=5)
+    plt.tick_params(axis='both', which='major', width=0.25, pad=1)
+    
+    # add xticklabels for SES
+    if x == "SES_at_birth":
+        plt.xticks([1,2,3],['high', 'middle', 'low'])
+    
+    plt.tight_layout()
+    sns.despine()
+    plt.savefig(outname, dpi=300)
+    plt.show()
+    
+    if return_p:
+        return p
+    
+    
+def correlation_plot_cells(x, y, data, xlabel, ylabel, outname, one_sided=False, return_p=False):
+    '''
+    Function to plot relation of x and y.
+    
+    x: str, variable name in data
+    y: str, variable name in data
+    data: pd.Dataframe, df with variables x and y
+    xlabel: str, x-axis label
+    ylabel: str, y-axis label
+    outname: os.path, name of the file where figure should be saved
+    '''
+    # Spearman correlation between x and y
+    r, p = spearmanr(data[x], data[y], nan_policy='omit')
+    if one_sided == True:
+        p = p/2
+
+    # DOF and CI
+    n = len(data[x])
+    dof = n - 2
+    
+    z = np.arctanh(r)  # Fisher transformation
+    se = 1/np.sqrt(n-3)  # standard error
+    delta = 1.96 * se
+    ci_lower = np.tanh(z - delta)  # convert back to r scale
+    ci_upper = np.tanh(z + delta)  # convert back to r scale
+
+    print(f'Correlation between {x} and {y}: r={r:.3f} with DOF={dof}, p={p:.3f}, CI=({ci_lower:.3f}, {ci_upper:.3f})')
+
+    # plotting
+    matplotlib.rcParams['grid.linewidth'] = 6
+    cm = 1/2.54
+    fig = plt.figure(figsize=(5.5*cm,4*cm), dpi=300)
+    
+    # Normalize y-values for colormap
+    norm = mcolors.Normalize(vmin=data[y].min(), vmax=data[y].max())
+
+    # Scatter plot with colormap
+    sc = plt.scatter(
+        data[x],
+        data[y],
+        c=data[y],                 # color depends on y-value
+        cmap='coolwarm',            
+        norm=norm,
+        s=6,
+        edgecolors='none'
+)
+    # Regression line (without scatter)
+    plot = sns.regplot(
+        x=data[x],
+        y=data[y],
+        scatter=False,
+        color='black',
+        line_kws={'linewidth': 1},
+        truncate=True
+)
+    
+    # plot = sns.regplot(x=data[x], y=data[y], color=color, n_boot=10000, 
+    #                     scatter_kws={'s': 6, 'edgecolor': 'None'}, truncate=True, line_kws={'linewidth': 1.5})
+    
+    # add correlation coefficient and p-value
+    textstr = '\n'.join((
+            r'$r=%.3f$' % (r),
+            r'$p=%.3f$' % (p)))
+    if one_sided == True:
+            textstr = '\n'.join((
+                r'$r=%.3f$' % (r),
+                r'$p_1=%.3f$' % (p)))
+    if p < 0.001:
+        textstr = '\n'.join((
+            r'$r=%.3f$' % (r),
+            r'$p<0.001$'))
+    props = dict(boxstyle='round', facecolor='silver', alpha=0.8, edgecolor='silver')
     plot.text(0.03, 0.98, textstr, transform=plot.transAxes, fontsize=5, verticalalignment='top', bbox=props)
 
     # label settings
