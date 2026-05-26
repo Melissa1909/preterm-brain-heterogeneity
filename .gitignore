@@ -30,9 +30,9 @@ outputs/supplement/rutherford/braincharts
 
 # TRANSIENT
 outputs/consistency_microscale_old
-outputs/consistency_microscale/*
+#outputs/consistency_microscale/*
 code/3_microscale*
-code/imaging_transcriptimics.py
+#code/imaging_transcriptimics.py
 requirements.txt
 
 # CENTILEBRAIN
