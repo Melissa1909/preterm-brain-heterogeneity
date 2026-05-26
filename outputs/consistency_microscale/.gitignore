@@ -1,5 +1,0 @@
-# Ignore everything in this folder
-BEST*
-all_correlations_cell_types.csv
-# Except this file
-!.gitignore
