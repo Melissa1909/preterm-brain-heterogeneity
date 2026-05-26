@@ -9,7 +9,7 @@ from nibabel.gifti import GiftiImage, GiftiDataArray
 from scipy.stats import spearmanr
 from statsmodels.stats.multitest import multipletests
 
-from enigmatoolbox.permutation_testing import spin_test
+#from enigmatoolbox.permutation_testing import spin_test
 from neuromaps.stats import compare_images
 from neuromaps.nulls import burt2020, alexander_bloch
 
@@ -92,6 +92,7 @@ def generate_parcellation_file():
 def cell_correlation(mean_expression, cortical_data, n_rot=1000, p_method='spin'):
     ''''
     Correlate mean gene expression of a specific cell type (mean_expression) with deviation scores for each subject.
+    Updated p_methods.
     
     mean_expression: np.array, mean expression for cell type from get_mean_expression_cell_type()
     cortical_data: pd.DataFrame (nsub x 68), deviation scores per subject
@@ -108,12 +109,15 @@ def cell_correlation(mean_expression, cortical_data, n_rot=1000, p_method='spin'
         
         # calculate p-value with method that corrects for spatial autocorrelation
         if p_method == 'spin':
-            r, pspin = spin_test(mean_expression, sub_df, n_rot=n_rot, type='spearman')
-            # parcellation = abagen.fetch_desikan_killiany(surface=True)
-            # parcellation = parcellation['image']
-            # rotated = alexander_bloch(data=mean_expression, atlas='fsaverage', density='10k', n_perm=n_rot, seed=1234,
-            #                             parcellation=parcellation)
-            # r, pspin = compare_images(mean_expression, sub_df, nulls=rotated, metric='spearmanr')
+            parcellation = abagen.fetch_desikan_killiany(surface=True)
+            parcellation = parcellation['image']
+            rotated = alexander_bloch(data=mean_expression, atlas='fsaverage', density='10k', n_perm=n_rot, seed=1234,
+                                            parcellation=parcellation)
+            r, pspin = compare_images(mean_expression, sub_df, nulls=rotated, metric='spearmanr')
+        
+        # elif p_method == 'spin_enigma':
+        #     r, pspin = spin_test(mean_expression, sub_df, n_rot=n_rot, type='spearman')
+            
             
         elif p_method == 'burt':
             #generate_parcellation_file()
@@ -140,6 +144,7 @@ def cell_correlation(mean_expression, cortical_data, n_rot=1000, p_method='spin'
         corr_coeffs_df['p_fdr'] = multipletests(corr_coeffs_df['p'], method='fdr_bh')[1]
 
     return corr_coeffs_df
+
 
 
 
