@@ -1,0 +1,12 @@
+------------------------------
+SUBJECT Epicure47719-T13D
+DATE Wed Mar 18 20:31:45 GMT 2026
+USER andrewmelbourne
+HOST sie217-mac.local
+PROCESSOR arm64
+OS Darwin
+Darwin sie217-mac.local 25.3.0 Darwin Kernel Version 25.3.0: Wed Jan 28 20:56:34 PST 2026; root:xnu-12377.91.3~2/RELEASE_ARM64_T8122 arm64
+dev (freesurfer-macOS-darwin_arm64-8.1.0-20250718-f30dfed)
+/Applications/freesurfer/8.1.0/bin/recon-all
+PWD /Users/andrewmelbourne/Desktop/EPICure_freesurfer/post/freesurfer_8.1.0/Epicure47719-T13D
+CMD mri_synthstrip --threads 1 -i /Users/andrewmelbourne/Desktop/EPICure_freesurfer/post/freesurfer_8.1.0/Epicure47719-T13D/mri/orig.mgz -o /Users/andrewmelbourne/Desktop/EPICure_freesurfer/post/freesurfer_8.1.0/Epicure47719-T13D/mri/synthstrip.mgz

@@ -1,0 +1,12 @@
+------------------------------
+SUBJECT Epicure66734-T13D
+DATE Wed May  6 21:19:18 BST 2026
+USER andrewmelbourne
+HOST sie217-mac.local
+PROCESSOR arm64
+OS Darwin
+Darwin sie217-mac.local 25.4.0 Darwin Kernel Version 25.4.0: Thu Mar 19 19:32:59 PDT 2026; root:xnu-12377.101.15~1/RELEASE_ARM64_T8122 arm64
+dev (freesurfer-macOS-darwin_arm64-8.1.0-20250718-f30dfed)
+/Applications/freesurfer/8.1.0/bin/recon-all
+PWD /Users/andrewmelbourne/Desktop/EPICure_freesurfer/post/freesurfer_8.1.0/Epicure66734-T13D/mri
+CMD talairach_afd -T 0.005 -xfm transforms/talairach.xfm
